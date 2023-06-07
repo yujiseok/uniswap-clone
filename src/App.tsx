@@ -1,4 +1,10 @@
+import Navbar from "./components/Navbar";
+
 const App = () => {
-  return <div className="py-4 text-xl text-blue-200">App</div>;
+  return (
+    <div className="min-h-screen bg-gray-200">
+      <Navbar />
+    </div>
+  );
 };
 export default App;
