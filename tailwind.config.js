@@ -10,6 +10,7 @@ export default {
         "uni-gray-1": "#5d6785",
         "uni-gray-2": "#7780a0",
         "uni-gray-3": "#99a1bd14",
+        "uni-gray-4": "#98a1c0",
         "uni-pink-1": "rgba(251, 17, 142, 0.12)",
         "uni-pink-2": "rgb(251, 17, 142)",
         "uni-search": "rgba(255,255,255,0.4)",
@@ -20,9 +21,7 @@ export default {
       },
       boxShadow: {
         "uni-dropdown": "0 4px 12px 0 #00000026",
-      },
-      gridTemplateColumns: {
-        "min-content": "min-content 1fr min-content",
+        "uni-pink": "rgb(255, 0, 199) 0px 0px 16px 0px",
       },
     },
   },

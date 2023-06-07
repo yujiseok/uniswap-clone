@@ -26,6 +26,7 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const [isTickerOpen, setIsTickerOpen] = useState(false);
   const [tickerUrl, setTickerUrl] = useState(Ethereum);
+  const [show, setShow] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const tickerRef = useRef<HTMLUListElement>(null);
@@ -33,36 +34,56 @@ const Navbar = () => {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
+        toggle &&
         dropdownRef.current &&
         !dropdownRef.current?.contains(e.target as HTMLElement)
       ) {
-        console.log(e.target, dropdownRef.current);
-        setToggle(false);
-      }
-    };
-    if (toggle) document.addEventListener("mousedown", handleClickOutside);
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [toggle]);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        isTickerOpen &&
-        !tickerRef.current?.contains(e.target as HTMLElement)
-      ) {
-        setIsTickerOpen(false);
+        console.log(e.target);
+        setToggle(!toggle);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isTickerOpen]);
-  console.log(toggle);
+  }, [toggle]);
+
+  // useEffect(() => {
+  //   const handleClickOutside = (e: MouseEvent) => {
+  //     if (
+  //       isTickerOpen &&
+  //       !tickerRef.current?.contains(e.target as HTMLElement)
+  //     ) {
+  //       setIsTickerOpen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleClickOutside);
+
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, [isTickerOpen]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 150) {
+        setShow(true);
+      } else {
+        setShow(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <nav className="z-10 h-[72px] w-full bg-transparent px-3 py-5">
-      <div className="flex w-full items-center">
+    <nav
+      className={`${
+        show ? "border-b border-ticker-hover bg-white" : "bg-transparent"
+      } fixed left-0 top-0 z-10 h-[72px] w-full px-3 py-5 transition-colors`}
+    >
+      <div className="flex h-full w-full items-center">
         <ul className="relative flex flex-1 items-center gap-4 text-uni-gray-1">
           <li>
             <Logo className="text-black" />
@@ -76,7 +97,12 @@ const Navbar = () => {
             </li>
           ))}
           <li className="cursor-pointer rounded-lg  hover:bg-uni-gray-3">
-            <button className="p-2" onClick={() => setToggle((prev) => !prev)}>
+            <button
+              className="p-2"
+              onClick={() => {
+                setToggle((prev) => !prev);
+              }}
+            >
               <Ellipsis />
             </button>
           </li>

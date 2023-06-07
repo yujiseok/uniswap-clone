@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-linear {
+  color: transparent;
+  background: linear-gradient(
+    10deg,
+    rgb(255, 79, 184) 0%,
+    rgb(255, 159, 251) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.bg-linear {
+  background: linear-gradient(
+    93.06deg,
+    rgb(255, 0, 199) 2.66%,
+    rgb(255, 159, 251) 98.99%
+  );
+}
