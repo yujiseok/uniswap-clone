@@ -46,3 +46,8 @@
     ),
     rgb(255, 255, 255);
 }
+
+.banner-bg {
+  background: url(https://app.uniswap.org/static/media/wallet_banner_phone_image.7458b169d90ac9039783.png)
+    right 15px top 18px / 166px no-repeat rgb(253, 130, 255);
+}
