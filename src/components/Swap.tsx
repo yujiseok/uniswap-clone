@@ -3,17 +3,23 @@ import Ethereum from "../assets/eth.png";
 import { ReactComponent as Chevron } from "../assets/chevron.svg";
 import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
 import { ReactComponent as Close } from "../assets/close.svg";
+import { ReactComponent as Question } from "../assets/question.svg";
 import { useState } from "react";
 
 const Swap = () => {
   const [isClosed, setIsClosed] = useState(false);
   const [isSwitched, setIsSwitched] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [toggle, setToggle] = useState(false);
+  const [active, setActive] = useState(0);
+
+  const handleClickActive = (i: number) => setActive(i);
 
   return (
     <>
       <section className="mx-auto max-w-[480px]">
         <div className="rounded-2xl border border-ticker-hover bg-white px-2 pb-2 pt-3">
-          <div className="mb-[10px] flex items-center justify-between px-3">
+          <div className="relative mb-[10px] flex items-center justify-between px-3">
             <div className="flex gap-4">
               <div>스왑</div>
               <button className="flex items-center gap-1 text-uni-search-slash-2 transition-opacity hover:opacity-90">
@@ -22,10 +28,107 @@ const Swap = () => {
             </div>
 
             <div>
-              <button className="transition-opacity hover:opacity-70">
+              <button
+                className="transition-opacity hover:opacity-70"
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
+              >
                 <Config className="text-uni-search-slash-2" />
               </button>
             </div>
+            {/* 드롭다운 */}
+            {isDropdownOpen ? (
+              <div className="absolute right-0 top-full z-10 mt-[10px] flex max-w-[330px] flex-col gap-4 rounded-2xl border border-ticker-hover bg-white p-4 text-uni-search-slash-2 shadow-swap-config">
+                <div className="flex items-center gap-4">
+                  <div>
+                    <div>자동 라우터 API</div>
+                    <div className="mt-1 text-xs">
+                      더 빠른 견적을 받으려면 Uniswap Labs API를 사용하십시오.
+                    </div>
+                  </div>
+
+                  <label
+                    htmlFor="toggle-dot"
+                    className="flex cursor-pointer items-center"
+                  >
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        id="toggle-dot"
+                        className="peer sr-only"
+                        onChange={() => {
+                          setToggle((prev) => !prev);
+                          setActive(0);
+                        }}
+                        checked={toggle}
+                      />
+                      <div className="block h-8 w-16 rounded-full border border-transparent bg-uni-pink-1 p-1 peer-checked:border-ticker-hover peer-checked:bg-white" />
+                      <div className="absolute right-1 top-1 h-6 w-6 rounded-full bg-uni-pink-2 transition peer-checked:right-3 peer-checked:-translate-x-full peer-checked:bg-uni-gray-9" />
+                    </div>
+                  </label>
+                </div>
+                {toggle ? (
+                  <div className="flex flex-col gap-[1.5px] overflow-hidden rounded-xl">
+                    {routerArr.map((item, i) => (
+                      <div
+                        className="flex cursor-pointer items-center bg-uni-gray-5 px-4 py-3"
+                        onClick={() => handleClickActive(i)}
+                      >
+                        <div className="flex flex-col gap-1">
+                          <div className="text-uni-black-1">{item.heading}</div>
+                          <div className="text-xs">{item.sub}</div>
+                        </div>
+                        <button
+                          className={`${
+                            active === i
+                              ? "border-uni-pink-2"
+                              : "border-ticker-hover"
+                          } rounded-full border-2  bg-transparent p-[5px]`}
+                        >
+                          <div
+                            className={`${
+                              active === i ? "bg-uni-pink-2" : "bg-transparent"
+                            } h-[10px] w-[10px] rounded-full`}
+                          />
+                        </button>
+                      </div>
+                    ))}
+
+                    {/* <div className="mt-[1.5px] flex items-center bg-uni-gray-5 px-4 py-3">
+                      <div className="flex flex-col gap-1">
+                        <div className="text-uni-black-1">
+                          유니스왑 클라이언트
+                        </div>
+                        <div className="text-xs">
+                          브라우저를 통해 Uniswap 프로토콜에서 최적의 경로를
+                          찾습니다. 높은 대기 시간과 가격이 발생할 수 있습니다.
+                        </div>
+                      </div>
+                      <button className="rounded-full border-2 border-ticker-hover bg-transparent p-[5px]">
+                        <div className="h-[10px] w-[10px] rounded-full bg-uni-pink-2 opacity-0" />
+                      </button>
+                    </div> */}
+                  </div>
+                ) : null}
+
+                <div className="flex items-center justify-between border-b border-t py-4">
+                  <div className="flex items-center gap-2">
+                    최대 가격 변동 <Question />
+                  </div>
+                  <button className="flex items-center text-uni-black-1">
+                    자동 <Chevron />
+                  </button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    거래 마감 시간 <Question />
+                  </div>
+
+                  <button className="flex items-center text-uni-black-1">
+                    30 <Chevron />
+                  </button>
+                </div>
+              </div>
+            ) : null}
           </div>
 
           {isSwitched ? (
@@ -164,3 +267,14 @@ const Swap = () => {
   );
 };
 export default Swap;
+
+const routerArr = [
+  {
+    heading: "유니스왑 API",
+    sub: "Uniswap Labs 라우팅 API를 사용하여 Uniswap 프로토콜에서 최적의 경로를 찾습니다.",
+  },
+  {
+    heading: "유니스왑 클라이언트",
+    sub: "브라우저를 통해 Uniswap 프로토콜에서 최적의 경로를 찾습니다. 높은 대기 시간과 가격이 발생할 수 있습니다.",
+  },
+];

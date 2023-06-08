@@ -15,6 +15,7 @@ export default {
         "uni-gray-6": "#E2E7F6",
         "uni-gray-7": "#EBEEFB",
         "uni-gray-8": "rgb(232, 236, 251)",
+        "uni-gray-9": "#8893B6",
         "uni-pink-1": "rgba(251, 17, 142, 0.12)",
         "uni-pink-2": "rgb(251, 17, 142)",
         "uni-pink-3": "#fb118e",
@@ -35,6 +36,8 @@ export default {
         "uni-select": "rgba(0, 0, 0, 0.075) 0px 6px 10px",
         banner:
           "rgba(51, 53, 72, 0.04) 8px 12px 20px, rgba(51, 53, 72, 0.02) 4px 6px 12px, rgba(51, 53, 72, 0.04) 4px 4px 8px",
+        "swap-config":
+          "rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px, rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.01) 0px 24px 32px",
       },
       backgroundImage: {
         "swap-card": "url(/src/assets/swapCard.png)",
@@ -46,6 +49,15 @@ export default {
       backgroundSize: {
         "auto-100": "auto 100%",
         170: "170px",
+      },
+      keyframes: {
+        toggle: {
+          "0%": { "margin-left": "0", "margin-right": "28px" },
+          "100%": { "margin-left": "28px", "margin-right": "0" },
+        },
+      },
+      animation: {
+        toggle: "toggle 0.1s ease-in running",
       },
     },
   },
