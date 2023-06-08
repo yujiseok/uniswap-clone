@@ -1,3 +1,4 @@
+import BottomSection from "./components/BottomSection";
 import MiddleSection from "./components/MiddleSection";
 import Navbar from "./components/Navbar";
 
@@ -7,6 +8,7 @@ const App = () => {
       {/* <Navbar /> */}
 
       <MiddleSection />
+      <BottomSection />
     </main>
   );
 };
