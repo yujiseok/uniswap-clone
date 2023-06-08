@@ -7,6 +7,7 @@ import { useState } from "react";
 
 const Swap = () => {
   const [isClosed, setIsClosed] = useState(false);
+  const [isSwitched, setIsSwitched] = useState(false);
 
   return (
     <>
@@ -27,50 +28,100 @@ const Swap = () => {
             </div>
           </div>
 
-          <div className="rounded-2xl bg-uni-gray-5 p-4 text-uni-black-1">
-            <div className="flex items-center">
-              <input
-                type="text"
-                placeholder="0"
-                inputMode="decimal"
-                pattern="^[0-9]*[.,]?[0-9]*$"
-                minLength={1}
-                maxLength={79}
-                className="w-0 flex-1 bg-transparent text-4xl outline-none placeholder:text-uni-search-slash-2"
-              />
-              <button className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6">
-                <div className="flex items-center gap-2">
-                  <img src={Ethereum} alt="" className="h-6 w-6" />
-                  <span>ETH</span>
-                </div>
-                <Chevron />
-              </button>
+          {isSwitched ? (
+            <div className="rounded-2xl bg-uni-gray-5 p-4 text-uni-black-1">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="0"
+                  inputMode="decimal"
+                  pattern="^[0-9]*[.,]?[0-9]*$"
+                  minLength={1}
+                  maxLength={79}
+                  className="w-0 flex-1 bg-transparent text-4xl outline-none placeholder:text-uni-search-slash-2"
+                />
+                <button className="flex items-center gap-2 rounded-2xl bg-uni-pink-2 p-[6px] pl-[10px] pr-[6px] text-xl leading-5 text-white shadow-uni-select">
+                  토큰 선택
+                  <Chevron className="stroke-white" />
+                </button>
+              </div>
+              <div className="pt-2 text-sm">100</div>
             </div>
-            <div className="pt-2 text-sm">100</div>
-          </div>
+          ) : (
+            <div className="rounded-2xl bg-uni-gray-5 p-4 text-uni-black-1">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="0"
+                  inputMode="decimal"
+                  pattern="^[0-9]*[.,]?[0-9]*$"
+                  minLength={1}
+                  maxLength={79}
+                  className="w-0 flex-1 bg-transparent text-4xl outline-none placeholder:text-uni-search-slash-2"
+                />
+                <button className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6">
+                  <div className="flex items-center gap-2">
+                    <img src={Ethereum} alt="" className="h-6 w-6" />
+                    <span>ETH</span>
+                  </div>
+                  <Chevron />
+                </button>
+              </div>
+              <div className="pt-2 text-sm">100</div>
+            </div>
+          )}
+
           <div className="relative -my-[18px] flex justify-center">
-            <button className="grid h-10 w-10 place-items-center rounded-xl border-4 border-white bg-uni-gray-7">
+            <button
+              className="grid h-10 w-10 place-items-center rounded-xl border-4 border-white bg-uni-gray-7"
+              onClick={() => setIsSwitched((prev) => !prev)}
+            >
               <DownArrow />
             </button>
           </div>
-          <div className="rounded-2xl bg-uni-gray-5 p-4 text-uni-black-1">
-            <div className="flex items-center">
-              <input
-                type="text"
-                placeholder="0"
-                inputMode="decimal"
-                pattern="^[0-9]*[.,]?[0-9]*$"
-                minLength={1}
-                maxLength={79}
-                className="w-0 flex-1 bg-transparent text-4xl outline-none placeholder:text-uni-search-slash-2"
-              />
-              <button className="flex items-center gap-2 rounded-2xl bg-uni-pink-2 p-[6px] pl-[10px] pr-[6px] text-xl leading-5 text-white shadow-uni-select">
-                토큰 선택
-                <Chevron className="stroke-white" />
-              </button>
+
+          {isSwitched ? (
+            <div className="rounded-2xl bg-uni-gray-5 p-4 text-uni-black-1">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="0"
+                  inputMode="decimal"
+                  pattern="^[0-9]*[.,]?[0-9]*$"
+                  minLength={1}
+                  maxLength={79}
+                  className="w-0 flex-1 bg-transparent text-4xl outline-none placeholder:text-uni-search-slash-2"
+                />
+                <button className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6">
+                  <div className="flex items-center gap-2">
+                    <img src={Ethereum} alt="" className="h-6 w-6" />
+                    <span>ETH</span>
+                  </div>
+                  <Chevron />
+                </button>
+              </div>
+              <div className="pt-2 text-sm">100</div>
             </div>
-            <div className="pt-2 text-sm">100</div>
-          </div>
+          ) : (
+            <div className="rounded-2xl bg-uni-gray-5 p-4 text-uni-black-1">
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="0"
+                  inputMode="decimal"
+                  pattern="^[0-9]*[.,]?[0-9]*$"
+                  minLength={1}
+                  maxLength={79}
+                  className="w-0 flex-1 bg-transparent text-4xl outline-none placeholder:text-uni-search-slash-2"
+                />
+                <button className="flex items-center gap-2 rounded-2xl bg-uni-pink-2 p-[6px] pl-[10px] pr-[6px] text-xl leading-5 text-white shadow-uni-select">
+                  토큰 선택
+                  <Chevron className="stroke-white" />
+                </button>
+              </div>
+              <div className="pt-2 text-sm">100</div>
+            </div>
+          )}
 
           <button className="mt-1 w-full rounded-[20px] bg-uni-pink-1 p-4 text-xl font-semibold text-uni-pink-2 transition-colors duration-[250ms] hover:bg-uni-pink-4">
             지갑 연결
