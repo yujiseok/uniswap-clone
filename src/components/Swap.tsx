@@ -4,7 +4,7 @@ import { ReactComponent as Chevron } from "../assets/chevron.svg";
 import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
 import { ReactComponent as Close } from "../assets/close.svg";
 import { ReactComponent as Question } from "../assets/question.svg";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const Swap = () => {
   const [isClosed, setIsClosed] = useState(false);
@@ -12,8 +12,16 @@ const Swap = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [active, setActive] = useState(0);
+  const [isMaxOpened, setIsMaxOpened] = useState(false);
+  const [maxValue, setMaxValue] = useState("자동");
 
   const handleClickActive = (i: number) => setActive(i);
+  const handleClickMaxValue = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setMaxValue(e.currentTarget.textContent as string);
+  };
+
+  // const maxRef = useRef<HTMLDivElement>(null);
+  // const maxRefHeight = maxRef.current?.clientHeight;
 
   return (
     <>
@@ -70,6 +78,7 @@ const Swap = () => {
                   <div className="flex flex-col gap-[1.5px] overflow-hidden rounded-xl">
                     {routerArr.map((item, i) => (
                       <div
+                        key={item.heading}
                         className="flex cursor-pointer items-center bg-uni-gray-5 px-4 py-3"
                         onClick={() => handleClickActive(i)}
                       >
@@ -92,32 +101,62 @@ const Swap = () => {
                         </button>
                       </div>
                     ))}
-
-                    {/* <div className="mt-[1.5px] flex items-center bg-uni-gray-5 px-4 py-3">
-                      <div className="flex flex-col gap-1">
-                        <div className="text-uni-black-1">
-                          유니스왑 클라이언트
-                        </div>
-                        <div className="text-xs">
-                          브라우저를 통해 Uniswap 프로토콜에서 최적의 경로를
-                          찾습니다. 높은 대기 시간과 가격이 발생할 수 있습니다.
-                        </div>
-                      </div>
-                      <button className="rounded-full border-2 border-ticker-hover bg-transparent p-[5px]">
-                        <div className="h-[10px] w-[10px] rounded-full bg-uni-pink-2 opacity-0" />
-                      </button>
-                    </div> */}
                   </div>
                 ) : null}
+                <div className="h-[1px] w-full bg-ticker-hover" />
 
-                <div className="flex items-center justify-between border-b border-t py-4">
-                  <div className="flex items-center gap-2">
-                    최대 가격 변동 <Question />
+                <div className="">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      최대 가격 변동 <Question />
+                    </div>
+                    <button
+                      className="flex items-center text-uni-black-1"
+                      onClick={() => setIsMaxOpened((prev) => !prev)}
+                    >
+                      {maxValue}
+                      <Chevron
+                        className={`${
+                          isMaxOpened ? "rotate-180" : ""
+                        } transition-transform duration-[250ms]`}
+                      />
+                    </button>
                   </div>
-                  <button className="flex items-center text-uni-black-1">
-                    자동 <Chevron />
-                  </button>
+                  <div
+                    className={`${
+                      isMaxOpened ? "h-[55px]" : "h-0 overflow-hidden"
+                    } w-full items-center transition-[height]`}
+                    // ref={maxRef}
+                  >
+                    <div className="flex items-center justify-between gap-4 pt-3">
+                      <div className="flex rounded-2xl border border-ticker-hover p-1">
+                        {maxArr.map((item) => (
+                          <button
+                            key={item.label}
+                            className={`${
+                              maxValue === item.label
+                                ? "bg-uni-gray-6"
+                                : "bg-transparent"
+                            } rounded-xl px-3 py-[6px] text-uni-black-1`}
+                            onClick={handleClickMaxValue}
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                      </div>
+                      <div className="flex w-auto flex-1 justify-end gap-3 rounded-2xl border border-ticker-hover px-4 py-2">
+                        <input
+                          type="text"
+                          className="w-full text-right text-uni-black-1 outline-none"
+                          placeholder="0.10"
+                        />
+                        <div>%</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+                <div className="h-[1px] w-full bg-ticker-hover" />
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     거래 마감 시간 <Question />
@@ -278,3 +317,5 @@ const routerArr = [
     sub: "브라우저를 통해 Uniswap 프로토콜에서 최적의 경로를 찾습니다. 높은 대기 시간과 가격이 발생할 수 있습니다.",
   },
 ];
+
+const maxArr = [{ label: "자동" }, { label: "사용자 정의" }];
