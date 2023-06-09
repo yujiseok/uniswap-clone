@@ -11,6 +11,7 @@ import ModalPortal from "./ModalPortal";
 import SwapModal from "./SwapModal";
 import Hr from "./Hr";
 import RouterDropdown from "./RouterDropdown";
+import BottomBanner from "./BottomBanner";
 
 const Swap = () => {
   const [isClose, handleClickClose] = useToggle(false);
@@ -308,28 +309,12 @@ const Swap = () => {
         </div>
       </section>
 
-      {isClose ? null : (
-        <div className="banner-bg fixed bottom-5 right-5 z-10 flex h-[164px] w-[390px] flex-col justify-between rounded-[20px] border border-ticker-hover px-4 py-6 shadow-banner transition-all duration-[250ms] ease-in-out hover:bg-170">
-          <div className="flex items-start justify-between text-2xl font-medium text-white">
-            주머니 속 유니스왑
-            <button
-              className="transition-opacity duration-[250ms] hover:opacity-60"
-              onClick={handleClickClose}
-            >
-              <Close />
-            </button>
-          </div>
+      {isClose ? null : <BottomBanner handleClickClose={handleClickClose} />}
 
-          <a
-            href="https://wallet.uniswap.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="h-10 w-[125px] rounded-2xl bg-white p-[10px] text-center text-sm font-semibold transition-opacity duration-[250ms] hover:opacity-60"
-          >
-            더 알아보기
-          </a>
-        </div>
-      )}
+      <div className="fixed bottom-4 right-4 flex items-center gap-1 text-[11px] text-uni-green-1">
+        <div className="opacity-70 hover:opacity-100">17434367</div>
+        <div className="inline-block h-2 w-2 rounded-full bg-uni-green-1" />
+      </div>
 
       <AnimatePresence>
         {isModalOpen ? (
@@ -338,11 +323,6 @@ const Swap = () => {
           </ModalPortal>
         ) : null}
       </AnimatePresence>
-
-      <div className="fixed bottom-4 right-4 flex items-center gap-1 text-[11px] text-uni-green-1">
-        <div className="opacity-70 hover:opacity-100">17434367</div>
-        <div className="inline-block h-2 w-2 rounded-full bg-uni-green-1" />
-      </div>
     </>
   );
 };
