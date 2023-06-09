@@ -5,17 +5,20 @@ import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
 import { ReactComponent as Close } from "../assets/close.svg";
 import { ReactComponent as Question } from "../assets/question.svg";
 import { useRef, useState } from "react";
+import useToggle from "../hooks/useToggle";
 
 const Swap = () => {
-  const [isClosed, setIsClosed] = useState(false);
-  const [isSwitched, setIsSwitched] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [toggle, setToggle] = useState(false);
+  const [isClose, handleClickClose] = useToggle(false);
+  const [isSwitch, handleClickSwitch] = useToggle(false);
+  const [isDropdownOpen, handleClickDropdown] = useToggle(false);
+  const [toggle, handClickToggle] = useToggle(false);
+  const [isMaxOpen, handleClickMaxOpen] = useToggle(false);
+  const [isTimeOpen, handleClickTimeOpen] = useToggle(false);
+  const [isModalOpen, handleClickModal] = useToggle(false);
+
   const [active, setActive] = useState(0);
-  const [isMaxOpened, setIsMaxOpened] = useState(false);
   const [maxLabel, setMaxLabel] = useState(maxArr[0].label);
   const [maxValue, setMaxValue] = useState(0.1);
-  const [isTimeOpened, setIsTimeOpened] = useState(false);
   const [timeValue, setTimeValue] = useState(0);
 
   const handleClickActive = (i: number) => setActive(i);
@@ -53,7 +56,7 @@ const Swap = () => {
               ) : null}
               <button
                 className="py-[6px] pr-3 transition-opacity"
-                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                onClick={handleClickDropdown}
               >
                 <Config className="text-uni-search-slash-2" />
               </button>
@@ -79,7 +82,7 @@ const Swap = () => {
                         id="toggle-dot"
                         className="peer sr-only"
                         onChange={() => {
-                          setToggle((prev) => !prev);
+                          handClickToggle();
                           setActive(0);
                         }}
                         checked={toggle}
@@ -127,21 +130,21 @@ const Swap = () => {
                     </div>
                     <button
                       className="flex items-center gap-1 text-uni-black-1"
-                      onClick={() => setIsMaxOpened((prev) => !prev)}
+                      onClick={handleClickMaxOpen}
                     >
                       {maxLabel === "자동"
                         ? maxLabel
                         : `${maxValue.toFixed(2)}%`}
                       <Chevron
                         className={`${
-                          isMaxOpened ? "rotate-180" : ""
+                          isMaxOpen ? "rotate-180" : ""
                         } transition-transform duration-[250ms]`}
                       />
                     </button>
                   </div>
                   <div
                     className={`${
-                      isMaxOpened ? "h-[55px]" : "h-0 overflow-hidden"
+                      isMaxOpen ? "h-[55px]" : "h-0 overflow-hidden"
                     } w-full transition-[height]`}
                     // ref={maxRef}
                   >
@@ -182,12 +185,12 @@ const Swap = () => {
 
                   <button
                     className="flex items-center gap-1 text-uni-black-1"
-                    onClick={() => setIsTimeOpened((prev) => !prev)}
+                    onClick={handleClickTimeOpen}
                   >
                     {timeValue === 0 ? "30" : timeValue}
                     <Chevron
                       className={`${
-                        isTimeOpened ? "rotate-180" : ""
+                        isTimeOpen ? "rotate-180" : ""
                       } transition-transform duration-[250ms]`}
                     />
                   </button>
@@ -195,7 +198,7 @@ const Swap = () => {
 
                 <div
                   className={`${
-                    isTimeOpened ? "h-[52px]" : "h-0 overflow-hidden"
+                    isTimeOpen ? "h-[52px]" : "h-0 overflow-hidden"
                   } transition-[height]`}
                 >
                   <div
@@ -218,7 +221,7 @@ const Swap = () => {
             ) : null}
           </div>
 
-          {isSwitched ? (
+          {isSwitch ? (
             <div className="rounded-2xl bg-uni-gray-5 p-4 text-uni-black-1">
               <div className="flex items-center">
                 <input
@@ -264,13 +267,13 @@ const Swap = () => {
           <div className="relative -my-[18px] flex justify-center">
             <button
               className="grid h-10 w-10 place-items-center rounded-xl border-4 border-white bg-uni-gray-7"
-              onClick={() => setIsSwitched((prev) => !prev)}
+              onClick={handleClickSwitch}
             >
               <DownArrow />
             </button>
           </div>
 
-          {isSwitched ? (
+          {isSwitch ? (
             <div className="rounded-2xl bg-uni-gray-5 p-4 text-uni-black-1">
               <div className="flex items-center">
                 <input
@@ -323,13 +326,13 @@ const Swap = () => {
         </div>
       </section>
 
-      {isClosed ? null : (
+      {isClose ? null : (
         <div className="banner-bg fixed bottom-5 right-5 z-10 flex h-[164px] w-[390px] flex-col justify-between rounded-[20px] border border-ticker-hover px-4 py-6 shadow-banner transition-all duration-[250ms] ease-in-out hover:bg-170">
           <div className="flex items-start justify-between text-2xl font-medium text-white">
             주머니 속 유니스왑
             <button
               className="transition-opacity duration-[250ms] hover:opacity-60"
-              onClick={() => setIsClosed((prev) => !prev)}
+              onClick={handleClickClose}
             >
               <Close />
             </button>
