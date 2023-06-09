@@ -37,11 +37,11 @@ const Swap = () => {
   return (
     <>
       <section className="mx-auto max-w-[480px]">
-        <div className="rounded-2xl border border-ticker-hover bg-white px-2 pb-2 pt-3">
+        <div className="rounded-2xl border border-uni-gray-11 bg-white px-2 pb-2 pt-3">
           <div className="relative mb-[10px] flex items-center justify-between pl-3">
             <div className="flex gap-4">
               <div>스왑</div>
-              <button className="flex items-center gap-1 text-uni-search-slash-2 transition-opacity hover:opacity-90">
+              <button className="text-uni-gray-12 flex items-center gap-1 transition-opacity hover:opacity-90">
                 구입하다 <div className="h-2 w-2 rounded-full bg-uni-blue-1" />
               </button>
             </div>
@@ -54,7 +54,7 @@ const Swap = () => {
               } hover:opacity-70`}
             >
               {maxLabel !== "자동" ? (
-                <div className="pl-3 text-xs text-uni-search-slash-2">{`${maxValue.toFixed(
+                <div className="text-uni-gray-12 pl-3 text-xs">{`${maxValue.toFixed(
                   2
                 )}% 미끄러짐`}</div>
               ) : null}
@@ -62,7 +62,7 @@ const Swap = () => {
                 className="py-[6px] pr-3 transition-opacity"
                 onClick={handleClickDropdown}
               >
-                <Config className="text-uni-search-slash-2" />
+                <Config className="text-uni-gray-12" />
               </button>
             </div>
             {/* 드롭다운 */}

@@ -69,7 +69,7 @@ const SwapModal = ({
               type="text"
               placeholder="이름 검색 또는 주소 붙여 넣기"
               autoFocus
-              className="modal-search-input h-10 w-full rounded-xl border border-ticker-hover py-4 pl-10 pr-4 outline-none focus:bg-transparent"
+              className="modal-search-input border-uni-gray-11 h-10 w-full rounded-xl border py-4 pl-10 pr-4 outline-none focus:bg-transparent"
             />
           </div>
 
@@ -80,7 +80,7 @@ const SwapModal = ({
                   className={`${
                     item.ticker === tokenValue.ticker
                       ? "border-uni-blue-2 bg-uni-blue-3 text-uni-blue-2"
-                      : "border-ticker-hover bg-white"
+                      : "border-uni-gray-11 bg-white"
                   } flex gap-2 rounded-2xl border py-[6px] pl-[6px] pr-3`}
                   onClick={() => {
                     setTokenValue(item);

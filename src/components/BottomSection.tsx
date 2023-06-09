@@ -27,7 +27,7 @@ const BottomSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               key={item.heading}
-              className={`flex h-[260px] flex-col justify-between rounded-3xl border border-ticker-hover bg-uni-gray-5 bg-auto-100 bg-right-center bg-no-repeat p-8 transition-colors duration-[250ms] hover:border-uni-gray-4`}
+              className={`border-uni-gray-11 flex h-[260px] flex-col justify-between rounded-3xl border bg-uni-gray-5 bg-auto-100 bg-right-center bg-no-repeat p-8 transition-colors duration-[250ms] hover:border-uni-gray-4`}
             >
               <div className="flex items-center justify-between text-2xl font-semibold">
                 {item.heading} <img src={item.src} alt={item.desc} />

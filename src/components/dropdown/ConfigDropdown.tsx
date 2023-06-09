@@ -27,7 +27,7 @@ const ConfigDropdown = ({
   const handleClickActive = (i: number) => setActive(i);
 
   return (
-    <div className="absolute right-0 top-full z-10 mt-[10px] flex max-w-[330px] flex-col gap-4 rounded-2xl border border-ticker-hover bg-white px-4 pt-4 text-uni-search-slash-2 shadow-swap-config">
+    <div className="text-uni-gray-12 absolute right-0 top-full z-10 mt-[10px] flex max-w-[330px] flex-col gap-4 rounded-2xl border border-uni-gray-11 bg-white px-4 pt-4 shadow-swap-config">
       <div className="flex items-center gap-4">
         <div>
           <div>자동 라우터 API</div>
@@ -51,7 +51,7 @@ const ConfigDropdown = ({
               }}
               checked={toggle}
             />
-            <div className="block h-8 w-16 rounded-full border border-transparent bg-uni-pink-1 p-1 peer-checked:border-ticker-hover peer-checked:bg-white" />
+            <div className="block h-8 w-16 rounded-full border border-transparent bg-uni-pink-1 p-1 peer-checked:border-uni-gray-11 peer-checked:bg-white" />
             <div className="absolute right-1 top-1 h-6 w-6 rounded-full bg-uni-pink-2 transition peer-checked:right-3 peer-checked:-translate-x-full peer-checked:bg-uni-gray-9" />
           </div>
         </label>
@@ -84,7 +84,7 @@ const ConfigDropdown = ({
           // ref={maxRef}
         >
           <div className="flex items-center justify-between gap-4 pt-3">
-            <div className="flex rounded-2xl border border-ticker-hover p-1">
+            <div className="flex rounded-2xl border border-uni-gray-11 p-1">
               {maxArr.map((item) => (
                 <button
                   key={item.label}
@@ -97,7 +97,7 @@ const ConfigDropdown = ({
                 </button>
               ))}
             </div>
-            <div className="flex w-auto flex-1 justify-end gap-3 rounded-2xl border border-ticker-hover px-4 py-2">
+            <div className="flex w-auto flex-1 justify-end gap-3 rounded-2xl border border-uni-gray-11 px-4 py-2">
               <input
                 type="text"
                 className="w-full text-right text-uni-black-1 outline-none"
@@ -136,7 +136,7 @@ const ConfigDropdown = ({
           className={`${
             timeValue > 4320
               ? "border-uni-red-1 text-uni-red-2"
-              : "border-ticker-hover"
+              : "border-uni-gray-11"
           } flex w-full justify-end gap-3 rounded-xl border px-4 py-2`}
         >
           <input

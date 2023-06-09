@@ -6,7 +6,7 @@ const BottomBanner = ({
   handleClickClose: () => void;
 }) => {
   return (
-    <div className="banner-bg fixed bottom-5 right-5 z-10 flex h-[164px] w-[390px] flex-col justify-between rounded-[20px] border border-ticker-hover px-4 py-6 shadow-banner transition-all duration-[250ms] ease-in-out hover:bg-170">
+    <div className="banner-bg border-uni-gray-11 fixed bottom-5 right-5 z-10 flex h-[164px] w-[390px] flex-col justify-between rounded-[20px] border px-4 py-6 shadow-banner transition-all duration-[250ms] ease-in-out hover:bg-170">
       <div className="flex items-start justify-between text-2xl font-medium text-white">
         주머니 속 유니스왑
         <button

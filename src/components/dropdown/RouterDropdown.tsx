@@ -18,7 +18,7 @@ const RouterDropdown = ({ handleClickActive, active }: IRouterDropdown) => {
           </div>
           <button
             className={`${
-              active === i ? "border-uni-pink-2" : "border-ticker-hover"
+              active === i ? "border-uni-pink-2" : "border-uni-gray-11"
             } rounded-full border-2  bg-transparent p-[5px]`}
           >
             <div

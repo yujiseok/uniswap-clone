@@ -79,7 +79,7 @@ const Navbar = () => {
   return (
     <nav
       className={`${
-        show ? "border-b border-ticker-hover bg-white" : "bg-transparent"
+        show ? "border-b border-uni-gray-11 bg-white" : "bg-transparent"
       } fixed left-0 top-0 z-10 h-[72px] w-full px-3 py-5 transition-colors`}
     >
       <div className="flex h-full w-full items-center">
@@ -148,7 +148,7 @@ const Navbar = () => {
               placeholder="검색 토큰 및 NFT 컬렉션"
               className="w-full bg-transparent outline-none "
             />
-            <div className="flex h-5 w-5 items-center justify-center rounded bg-uni-search-slash-1 text-xs text-uni-search-slash-2 opacity-60">
+            <div className="text-uni-gray-12 flex h-5 w-5 items-center justify-center rounded bg-uni-search-slash-1 text-xs opacity-60">
               /
             </div>
           </div>
@@ -176,7 +176,7 @@ const Navbar = () => {
               {tickerArr.map((item) => (
                 <li key={item.ticker}>
                   <button
-                    className="flex w-60 items-center justify-between rounded-xl px-2 py-[10px] transition-colors duration-[250] hover:bg-ticker-hover"
+                    className="flex w-60 items-center justify-between rounded-xl px-2 py-[10px] transition-colors duration-[250] hover:bg-uni-gray-11"
                     onClick={() => {
                       setTickerUrl(item.src);
                       setIsTickerOpen((prev) => !prev);

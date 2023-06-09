@@ -15,7 +15,7 @@ const SwapInput = ({
       maxLength={79}
       value={`${strValue === "0" ? "" : strValue}`}
       onChange={handleSwapValue}
-      className="w-0 flex-1 bg-transparent text-4xl outline-none placeholder:text-uni-search-slash-2"
+      className="placeholder:text-uni-gray-12 w-0 flex-1 bg-transparent text-4xl outline-none"
     />
   );
 };
