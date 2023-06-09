@@ -3,7 +3,7 @@ import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Question } from "../../assets/question.svg";
 import useToggle from "../../hooks/useToggle";
 import Hr from "../Hr";
-import RouterDropdown from "../RouterDropdown";
+import RouterDropdown from "./RouterDropdown";
 
 interface Props {
   maxLabel: MaxLabel;
