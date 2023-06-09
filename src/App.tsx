@@ -1,5 +1,5 @@
 import Navbar from "./components/Navbar";
-import Swap from "./components/Swap";
+import Swap from "./components/swap/Swap";
 
 const App = () => {
   return (
