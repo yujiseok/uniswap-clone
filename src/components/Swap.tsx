@@ -13,11 +13,15 @@ const Swap = () => {
   const [toggle, setToggle] = useState(false);
   const [active, setActive] = useState(0);
   const [isMaxOpened, setIsMaxOpened] = useState(false);
-  const [maxValue, setMaxValue] = useState("자동");
+  const [maxLabel, setMaxLabel] = useState(maxArr[0].label);
+  const [maxValue, setMaxValue] = useState(0.1);
+  const [isTimeOpened, setIsTimeOpened] = useState(false);
+  const [timeValue, setTimeValue] = useState(0);
 
   const handleClickActive = (i: number) => setActive(i);
-  const handleClickMaxValue = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setMaxValue(e.currentTarget.textContent as string);
+  const handleClickMaxLabel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // if (maxValue === 0) setMaxLabel(maxArr[0].label);
+    setMaxLabel(e.currentTarget.textContent as string);
   };
 
   // const maxRef = useRef<HTMLDivElement>(null);
@@ -27,7 +31,7 @@ const Swap = () => {
     <>
       <section className="mx-auto max-w-[480px]">
         <div className="rounded-2xl border border-ticker-hover bg-white px-2 pb-2 pt-3">
-          <div className="relative mb-[10px] flex items-center justify-between px-3">
+          <div className="relative mb-[10px] flex items-center justify-between pl-3">
             <div className="flex gap-4">
               <div>스왑</div>
               <button className="flex items-center gap-1 text-uni-search-slash-2 transition-opacity hover:opacity-90">
@@ -35,9 +39,20 @@ const Swap = () => {
               </button>
             </div>
 
-            <div>
+            <div
+              className={`${
+                maxLabel !== "자동"
+                  ? "flex items-center gap-2 rounded-2xl bg-uni-gray-5"
+                  : ""
+              } hover:opacity-70`}
+            >
+              {maxLabel !== "자동" ? (
+                <div className="pl-3 text-xs text-uni-search-slash-2">{`${maxValue.toFixed(
+                  2
+                )}% 미끄러짐`}</div>
+              ) : null}
               <button
-                className="transition-opacity hover:opacity-70"
+                className="py-[6px] pr-3 transition-opacity"
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
               >
                 <Config className="text-uni-search-slash-2" />
@@ -45,7 +60,7 @@ const Swap = () => {
             </div>
             {/* 드롭다운 */}
             {isDropdownOpen ? (
-              <div className="absolute right-0 top-full z-10 mt-[10px] flex max-w-[330px] flex-col gap-4 rounded-2xl border border-ticker-hover bg-white p-4 text-uni-search-slash-2 shadow-swap-config">
+              <div className="absolute right-0 top-full z-10 mt-[10px] flex max-w-[330px] flex-col gap-4 rounded-2xl border border-ticker-hover bg-white px-4 pt-4 text-uni-search-slash-2 shadow-swap-config">
                 <div className="flex items-center gap-4">
                   <div>
                     <div>자동 라우터 API</div>
@@ -105,16 +120,18 @@ const Swap = () => {
                 ) : null}
                 <div className="h-[1px] w-full bg-ticker-hover" />
 
-                <div className="">
+                <div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       최대 가격 변동 <Question />
                     </div>
                     <button
-                      className="flex items-center text-uni-black-1"
+                      className="flex items-center gap-1 text-uni-black-1"
                       onClick={() => setIsMaxOpened((prev) => !prev)}
                     >
-                      {maxValue}
+                      {maxLabel === "자동"
+                        ? maxLabel
+                        : `${maxValue.toFixed(2)}%`}
                       <Chevron
                         className={`${
                           isMaxOpened ? "rotate-180" : ""
@@ -125,7 +142,7 @@ const Swap = () => {
                   <div
                     className={`${
                       isMaxOpened ? "h-[55px]" : "h-0 overflow-hidden"
-                    } w-full items-center transition-[height]`}
+                    } w-full transition-[height]`}
                     // ref={maxRef}
                   >
                     <div className="flex items-center justify-between gap-4 pt-3">
@@ -134,11 +151,11 @@ const Swap = () => {
                           <button
                             key={item.label}
                             className={`${
-                              maxValue === item.label
-                                ? "bg-uni-gray-6"
+                              maxLabel === item.label
+                                ? "bg-uni-gray-8"
                                 : "bg-transparent"
                             } rounded-xl px-3 py-[6px] text-uni-black-1`}
-                            onClick={handleClickMaxValue}
+                            onClick={handleClickMaxLabel}
                           >
                             {item.label}
                           </button>
@@ -149,6 +166,7 @@ const Swap = () => {
                           type="text"
                           className="w-full text-right text-uni-black-1 outline-none"
                           placeholder="0.10"
+                          onChange={(e) => setMaxValue(Number(e.target.value))}
                         />
                         <div>%</div>
                       </div>
@@ -162,9 +180,39 @@ const Swap = () => {
                     거래 마감 시간 <Question />
                   </div>
 
-                  <button className="flex items-center text-uni-black-1">
-                    30 <Chevron />
+                  <button
+                    className="flex items-center gap-1 text-uni-black-1"
+                    onClick={() => setIsTimeOpened((prev) => !prev)}
+                  >
+                    {timeValue === 0 ? "30" : timeValue}
+                    <Chevron
+                      className={`${
+                        isTimeOpened ? "rotate-180" : ""
+                      } transition-transform duration-[250ms]`}
+                    />
                   </button>
+                </div>
+
+                <div
+                  className={`${
+                    isTimeOpened ? "h-[52px]" : "h-0 overflow-hidden"
+                  } transition-[height]`}
+                >
+                  <div
+                    className={`${
+                      timeValue > 4320
+                        ? "border-uni-red-1 text-uni-red-2"
+                        : "border-ticker-hover"
+                    } flex w-full justify-end gap-3 rounded-xl border px-4 py-2`}
+                  >
+                    <input
+                      type="text"
+                      placeholder="30"
+                      className="flex-1 bg-transparent text-right outline-none"
+                      onChange={(e) => setTimeValue(Number(e.target.value))}
+                    />
+                    <div className="text-uni-black-1">분</div>
+                  </div>
                 </div>
               </div>
             ) : null}

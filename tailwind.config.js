@@ -28,6 +28,8 @@ export default {
         "uni-blue-1": "#5D90FC",
         "uni-black-1": "#0d111c",
         "uni-green-1": "rgb(64, 182, 107)",
+        "uni-red-1": "rgba(250,43,27,0.12)",
+        "uni-red-2": "rgb(250,43,27)",
       },
       boxShadow: {
         "uni-dropdown": "0 4px 12px 0 #00000026",
