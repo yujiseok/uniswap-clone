@@ -10,6 +10,7 @@ import { AnimatePresence } from "framer-motion";
 import ModalPortal from "./ModalPortal";
 import SwapModal from "./SwapModal";
 import Hr from "./Hr";
+import RouterDropdown from "./RouterDropdown";
 
 const Swap = () => {
   const [isClose, handleClickClose] = useToggle(false);
@@ -97,33 +98,10 @@ const Swap = () => {
                   </label>
                 </div>
                 {toggle ? (
-                  <div className="flex flex-col gap-[1.5px] overflow-hidden rounded-xl">
-                    {routerArr.map((item, i) => (
-                      <div
-                        key={item.heading}
-                        className="flex cursor-pointer items-center bg-uni-gray-5 px-4 py-3"
-                        onClick={() => handleClickActive(i)}
-                      >
-                        <div className="flex flex-col gap-1">
-                          <div className="text-uni-black-1">{item.heading}</div>
-                          <div className="text-xs">{item.sub}</div>
-                        </div>
-                        <button
-                          className={`${
-                            active === i
-                              ? "border-uni-pink-2"
-                              : "border-ticker-hover"
-                          } rounded-full border-2  bg-transparent p-[5px]`}
-                        >
-                          <div
-                            className={`${
-                              active === i ? "bg-uni-pink-2" : "bg-transparent"
-                            } h-[10px] w-[10px] rounded-full`}
-                          />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                  <RouterDropdown
+                    active={active}
+                    handleClickActive={handleClickActive}
+                  />
                 ) : null}
                 <Hr />
                 <div>
