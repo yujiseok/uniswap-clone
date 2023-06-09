@@ -4,3 +4,5 @@ declare module "*.svg" {
   const src: string;
   export default src;
 }
+
+type MaxLabel = "자동" | "사용자 정의";
