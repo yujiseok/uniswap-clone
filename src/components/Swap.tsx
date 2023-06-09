@@ -1,9 +1,8 @@
 import { AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { ReactComponent as Chevron } from "../assets/chevron.svg";
 import { ReactComponent as Config } from "../assets/config.svg";
 import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
-import eth from "../assets/eth.png";
 import useInput from "../hooks/useInput";
 import useToggle from "../hooks/useToggle";
 import BottomBanner from "./BottomBanner";
