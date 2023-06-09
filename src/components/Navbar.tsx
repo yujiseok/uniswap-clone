@@ -1,26 +1,25 @@
-import { ReactComponent as Logo } from "../assets/logo.svg";
+import { useEffect, useRef, useState } from "react";
+import { ReactComponent as Apple } from "../assets/apple.svg";
+import Arbitrum from "../assets/arb.svg";
+import { ReactComponent as BlueCheck } from "../assets/blue-check.svg";
+import BNBChain from "../assets/bnb.svg";
+import Celo from "../assets/celo.svg";
+import { ReactComponent as Chart } from "../assets/chart.svg";
+import { ReactComponent as Chevron } from "../assets/chevron.svg";
 import { ReactComponent as Discord } from "../assets/discord.svg";
-import { ReactComponent as Twitter } from "../assets/twitter.svg";
-import { ReactComponent as Github } from "../assets/github.svg";
-import { ReactComponent as SearchIcon } from "../assets/searchIcon.svg";
 import { ReactComponent as Ellipsis } from "../assets/ellipsis.svg";
+import Ethereum from "../assets/eth.png";
+import { ReactComponent as Github } from "../assets/github.svg";
+import { ReactComponent as Logo } from "../assets/logo.svg";
+import Optimism from "../assets/op.svg";
+import { ReactComponent as Poll } from "../assets/poll.svg";
+import Polygon from "../assets/polygon.svg";
+import { ReactComponent as SearchIcon } from "../assets/searchIcon.svg";
+import { ReactComponent as Twitter } from "../assets/twitter.svg";
 
 // 드롭다운용
-import { ReactComponent as Apple } from "../assets/apple.svg";
-import { ReactComponent as Poll } from "../assets/poll.svg";
-import { ReactComponent as Chart } from "../assets/chart.svg";
 
 // 티커드롭다운
-import { ReactComponent as Chevron } from "../assets/chevron.svg";
-import { ReactComponent as BlueCheck } from "../assets/blue-check.svg";
-import Ethereum from "../assets/eth.png";
-import Polygon from "../assets/polygon.svg";
-import Optimism from "../assets/op.svg";
-import Arbitrum from "../assets/arb.svg";
-import Celo from "../assets/celo.svg";
-import BNBChain from "../assets/bnb.svg";
-
-import { useEffect, useRef, useState } from "react";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);

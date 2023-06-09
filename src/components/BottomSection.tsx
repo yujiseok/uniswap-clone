@@ -1,5 +1,5 @@
-import dollar from "../assets/dollar.svg";
 import cmd from "../assets/cmd.svg";
+import dollar from "../assets/dollar.svg";
 import upArrow from "../assets/up-arrow.png";
 
 const BottomSection = () => {

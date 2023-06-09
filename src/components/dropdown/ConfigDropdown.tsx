@@ -1,10 +1,9 @@
 import { useState } from "react";
-import useToggle from "../../hooks/useToggle";
-import RouterDropdown from "../RouterDropdown";
-import { ReactComponent as Question } from "../../assets/question.svg";
 import { ReactComponent as Chevron } from "../../assets/chevron.svg";
-
+import { ReactComponent as Question } from "../../assets/question.svg";
+import useToggle from "../../hooks/useToggle";
 import Hr from "../Hr";
+import RouterDropdown from "../RouterDropdown";
 
 interface Props {
   maxLabel: MaxLabel;
