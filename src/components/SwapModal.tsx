@@ -58,7 +58,8 @@ const SwapModal = ({ handleClickModal }: { handleClickModal: () => void }) => {
             <input
               type="text"
               placeholder="이름 검색 또는 주소 붙여 넣기"
-              className="modal-search-input h-10 w-full rounded-xl border border-ticker-hover py-4 pl-10 pr-4 outline-none"
+              autoFocus
+              className="modal-search-input h-10 w-full rounded-xl border border-ticker-hover py-4 pl-10 pr-4 outline-none focus:bg-transparent"
             />
           </div>
 
