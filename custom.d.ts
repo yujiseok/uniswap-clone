@@ -6,3 +6,5 @@ declare module "*.svg" {
 }
 
 type MaxLabel = "자동" | "사용자 정의";
+
+type TokenLabel = "ETH" | "USDC" | "WBTC"
