@@ -7,4 +7,11 @@ declare module "*.svg" {
 
 type MaxLabel = "자동" | "사용자 정의";
 
-type TokenLabel = "ETH" | "USDC" | "WBTC"
+type TokenLabel = "ETH" | "USDC" | "WBTC";
+
+interface Token {
+  src: string;
+  token: string;
+  ticker: TokenLabel;
+  price: number;
+}
