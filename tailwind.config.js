@@ -16,6 +16,7 @@ export default {
         "uni-gray-7": "#EBEEFB",
         "uni-gray-8": "rgb(232, 236, 251)",
         "uni-gray-9": "#8893B6",
+        "uni-gray-10": "#98A1C014",
         "uni-pink-1": "rgba(251, 17, 142, 0.12)",
         "uni-pink-2": "rgb(251, 17, 142)",
         "uni-pink-3": "#fb118e",
@@ -25,6 +26,7 @@ export default {
         "uni-search-slash-2": "rgb(119, 128, 160)",
         "uni-dropdown-border": "#e8ecfb",
         "ticker-hover": "rgb(210, 217, 238)",
+        "uni-modal-overlay": "rgba(13, 17, 28, 0.6)",
         "uni-blue-1": "#5D90FC",
         "uni-black-1": "#0d111c",
         "uni-green-1": "rgb(64, 182, 107)",
@@ -40,6 +42,7 @@ export default {
           "rgba(51, 53, 72, 0.04) 8px 12px 20px, rgba(51, 53, 72, 0.02) 4px 6px 12px, rgba(51, 53, 72, 0.04) 4px 4px 8px",
         "swap-config":
           "rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px, rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.01) 0px 24px 32px",
+        "token-img": "white 0px 0px 1px",
       },
       backgroundImage: {
         "swap-card": "url(/src/assets/swapCard.png)",

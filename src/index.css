@@ -51,3 +51,15 @@
   background: url(https://app.uniswap.org/static/media/wallet_banner_phone_image.7458b169d90ac9039783.png)
     right 15px top 18px / 166px no-repeat rgb(253, 130, 255);
 }
+
+.modal-search-input {
+  background: url(https://app.uniswap.org/static/media/search.2f68ccda21d1e4407c50391c54ee413a.svg)
+    12px center / 20px 20px no-repeat scroll rgb(245, 246, 252);
+}
+
+.token-gradient {
+  background: radial-gradient(
+    white 60%,
+    rgba(255, 255, 255, 0) calc(70% + 1px)
+  );
+}

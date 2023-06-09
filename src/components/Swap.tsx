@@ -6,6 +6,10 @@ import { ReactComponent as Close } from "../assets/close.svg";
 import { ReactComponent as Question } from "../assets/question.svg";
 import { useRef, useState } from "react";
 import useToggle from "../hooks/useToggle";
+import { AnimatePresence } from "framer-motion";
+import ModalPortal from "./ModalPortal";
+import SwapModal from "./SwapModal";
+import Hr from "./Hr";
 
 const Swap = () => {
   const [isClose, handleClickClose] = useToggle(false);
@@ -121,8 +125,7 @@ const Swap = () => {
                     ))}
                   </div>
                 ) : null}
-                <div className="h-[1px] w-full bg-ticker-hover" />
-
+                <Hr />
                 <div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -176,8 +179,7 @@ const Swap = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="h-[1px] w-full bg-ticker-hover" />
+                <Hr />
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     거래 마감 시간 <Question />
@@ -195,7 +197,6 @@ const Swap = () => {
                     />
                   </button>
                 </div>
-
                 <div
                   className={`${
                     isTimeOpen ? "h-[52px]" : "h-0 overflow-hidden"
@@ -252,7 +253,10 @@ const Swap = () => {
                   maxLength={79}
                   className="w-0 flex-1 bg-transparent text-4xl outline-none placeholder:text-uni-search-slash-2"
                 />
-                <button className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6">
+                <button
+                  className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
+                  onClick={handleClickModal}
+                >
                   <div className="flex items-center gap-2">
                     <img src={Ethereum} alt="" className="h-6 w-6" />
                     <span>ETH</span>
@@ -348,6 +352,14 @@ const Swap = () => {
           </a>
         </div>
       )}
+
+      <AnimatePresence>
+        {isModalOpen ? (
+          <ModalPortal>
+            <SwapModal handleClickModal={handleClickModal} />
+          </ModalPortal>
+        ) : null}
+      </AnimatePresence>
 
       <div className="fixed bottom-4 right-4 flex items-center gap-1 text-[11px] text-uni-green-1">
         <div className="opacity-70 hover:opacity-100">17434367</div>
