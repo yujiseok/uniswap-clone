@@ -3,13 +3,14 @@ import { useRef, useState } from "react";
 import { ReactComponent as Chevron } from "../assets/chevron.svg";
 import { ReactComponent as Config } from "../assets/config.svg";
 import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
-import Ethereum from "../assets/eth.png";
+import eth from "../assets/eth.png";
+import useInput from "../hooks/useInput";
 import useToggle from "../hooks/useToggle";
 import BottomBanner from "./BottomBanner";
 import ConfigDropdown, { maxArr } from "./dropdown/ConfigDropdown";
 import Etherscan from "./Etherscan";
 import ModalPortal from "./ModalPortal";
-import SwapModal from "./SwapModal";
+import SwapModal, { tokenArr } from "./SwapModal";
 
 const Swap = () => {
   const [isClose, handleClickClose] = useToggle(false);
@@ -17,16 +18,19 @@ const Swap = () => {
   const [isDropdownOpen, handleClickDropdown] = useToggle(false);
   const [isModalOpen, handleClickModal] = useToggle(false);
 
+  const [swapTopValue, handleSwapTopValue] = useInput();
+
   const [maxLabel, setMaxLabel] = useState<MaxLabel>(maxArr[0].label);
   const [maxValue, setMaxValue] = useState(0.1);
+  const [tokenValue, setTokenValue] = useState<Token>(tokenArr[0]);
 
   const handleClickMaxLabel = (e: React.MouseEvent<HTMLButtonElement>) => {
     // if (maxValue === 0) setMaxLabel(maxArr[0].label);
     setMaxLabel(e.currentTarget.textContent as MaxLabel);
   };
 
-  // const maxRef = useRef<HTMLDivElement>(null);
-  // const maxRefHeight = maxRef.current?.clientHeight;
+  const tokenPrice = tokenValue.price;
+  const topPrice = (swapTopValue * tokenPrice).toLocaleString();
 
   return (
     <>
@@ -78,6 +82,7 @@ const Swap = () => {
                 pattern="^[0-9]*[.,]?[0-9]*$"
                 minLength={1}
                 maxLength={79}
+                onChange={handleSwapTopValue}
                 className="w-0 flex-1 bg-transparent text-4xl outline-none placeholder:text-uni-search-slash-2"
               />
               {isSwitch ? (
@@ -91,15 +96,22 @@ const Swap = () => {
                   onClick={handleClickModal}
                 >
                   <div className="flex items-center gap-2">
-                    <img src={Ethereum} alt="" className="h-6 w-6" />
-                    <span>ETH</span>
+                    <img
+                      src={tokenValue.src}
+                      alt={tokenValue.token}
+                      className="h-6 w-6"
+                    />
+                    <span>{tokenValue?.ticker}</span>
                   </div>
                   <Chevron />
                 </button>
               )}
             </div>
-            <div className="pt-2 text-sm">100</div>
+            <div className="pt-2 text-sm">
+              {!isNaN(swapTopValue) && swapTopValue !== 0 && `$${topPrice}`}
+            </div>
           </div>
+
           <div className="relative -my-[18px] flex justify-center">
             <button
               className="grid h-10 w-10 place-items-center rounded-xl border-4 border-white bg-uni-gray-7"
@@ -108,6 +120,7 @@ const Swap = () => {
               <DownArrow />
             </button>
           </div>
+
           <div className="rounded-2xl bg-uni-gray-5 p-4 text-uni-black-1">
             <div className="flex items-center">
               <input
@@ -125,7 +138,7 @@ const Swap = () => {
                   onClick={handleClickModal}
                 >
                   <div className="flex items-center gap-2">
-                    <img src={Ethereum} alt="" className="h-6 w-6" />
+                    <img src={tokenValue.src} alt="" className="h-6 w-6" />
                     <span>ETH</span>
                   </div>
                   <Chevron />
@@ -155,7 +168,11 @@ const Swap = () => {
       <AnimatePresence>
         {isModalOpen ? (
           <ModalPortal>
-            <SwapModal handleClickModal={handleClickModal} />
+            <SwapModal
+              handleClickModal={handleClickModal}
+              tokenValue={tokenValue}
+              setTokenValue={setTokenValue}
+            />
           </ModalPortal>
         ) : null}
       </AnimatePresence>
@@ -163,3 +180,18 @@ const Swap = () => {
   );
 };
 export default Swap;
+
+const priceArr = [
+  {
+    label: "ETH",
+    price: 1000,
+  },
+  {
+    label: "WBTC",
+    price: 10000,
+  },
+  {
+    label: "USDC",
+    price: 1,
+  },
+];

@@ -2,12 +2,22 @@ import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { ReactComponent as Close } from "../assets/close.svg";
 import eth from "../assets/eth.png";
+import { ReactComponent as RedCheck } from "../assets/red-check.svg";
 import usdc from "../assets/usdc.png";
 import wbtc from "../assets/wbtc.png";
-
 import Hr from "./Hr";
 
-const SwapModal = ({ handleClickModal }: { handleClickModal: () => void }) => {
+interface SwapModalProps {
+  handleClickModal: () => void;
+  tokenValue: Token;
+  setTokenValue: React.Dispatch<Token>;
+}
+
+const SwapModal = ({
+  handleClickModal,
+  tokenValue,
+  setTokenValue,
+}: SwapModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -66,7 +76,17 @@ const SwapModal = ({ handleClickModal }: { handleClickModal: () => void }) => {
           <ul className="flex gap-2">
             {tokenArr.map((item) => (
               <li key={item.ticker}>
-                <button className="flex gap-2 rounded-2xl border border-ticker-hover py-[6px] pl-[6px] pr-3">
+                <button
+                  className={`${
+                    item.ticker === tokenValue.ticker
+                      ? "border-uni-blue-2 bg-uni-blue-3 text-uni-blue-2"
+                      : "border-ticker-hover bg-white"
+                  } flex gap-2 rounded-2xl border py-[6px] pl-[6px] pr-3`}
+                  onClick={() => {
+                    setTokenValue(item);
+                    handleClickModal();
+                  }}
+                >
                   <img
                     src={item.src}
                     alt={item.ticker}
@@ -83,17 +103,30 @@ const SwapModal = ({ handleClickModal }: { handleClickModal: () => void }) => {
           {tokenArr.map((item) => (
             <li
               key={item.ticker}
-              className="flex items-center gap-4 px-5 py-2 hover:bg-uni-gray-10"
+              className={`${
+                item.ticker === tokenValue.ticker
+                  ? "pointer-events-none flex items-center justify-between opacity-40"
+                  : "cursor-pointer hover:bg-uni-gray-10"
+              }  px-5 py-2`}
+              onClick={() => {
+                setTokenValue(item);
+                handleClickModal();
+              }}
             >
-              <img
-                src={item.src}
-                alt={item.ticker}
-                className="token-gradient h-9 w-9 rounded-full shadow-token-img"
-              />
-              <div>
-                <div>{item.token}</div>
-                <div className="text-xs text-uni-gray-4">{item.ticker}</div>
+              <div className="flex items-center gap-4">
+                <img
+                  src={item.src}
+                  alt={item.ticker}
+                  className="token-gradient h-9 w-9 rounded-full shadow-token-img"
+                />
+
+                <div>
+                  <div>{item.token}</div>
+                  <div className="text-xs text-uni-gray-4">{item.ticker}</div>
+                </div>
               </div>
+
+              {item.ticker === tokenValue.ticker ? <RedCheck /> : null}
             </li>
           ))}
         </ul>
@@ -109,20 +142,23 @@ const modalVariants = {
   exit: { opacity: 0, transition: { ease: "easeIn", duration: 0.35 } },
 };
 
-const tokenArr = [
+export const tokenArr: Token[] = [
   {
     src: eth,
     token: "Ether",
     ticker: "ETH",
+    price: 1000,
   },
   {
     src: usdc,
     token: "USDCoin",
     ticker: "USDC",
+    price: 1,
   },
   {
     src: wbtc,
     token: "Wrapped BTC",
     ticker: "WBTC",
+    price: 10000,
   },
 ];

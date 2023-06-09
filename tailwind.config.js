@@ -28,6 +28,8 @@ export default {
         "ticker-hover": "rgb(210, 217, 238)",
         "uni-modal-overlay": "rgba(13, 17, 28, 0.6)",
         "uni-blue-1": "#5D90FC",
+        "uni-blue-2": "#4C82FB",
+        "uni-blue-3": "#4C82FB3D",
         "uni-black-1": "#0d111c",
         "uni-green-1": "rgb(64, 182, 107)",
         "uni-red-1": "rgba(250,43,27,0.12)",
