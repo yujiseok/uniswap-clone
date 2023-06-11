@@ -34,6 +34,7 @@ const Swap = () => {
 
   const topTokenPrice = formatNumber(swapTopValue, tokenValue.price);
   const topPrice = !isNaN(+swapTopValue) ? topTokenPrice : "";
+  // const bottomPrice = +swapTopValue / tokenValue.price; // 토큰 선택 가격으로 나눠야함
 
   return (
     <>
@@ -80,7 +81,7 @@ const Swap = () => {
           <SwapBlock>
             <div className="flex items-center">
               <SwapInput
-                value={`${isSwitch ? swapBottomValue : swapTopValue}`}
+                value={`${isSwitch ? 0 : swapTopValue}`}
                 handleSwapValue={handleSwapTopValue}
               />
               {isSwitch ? (
@@ -105,7 +106,7 @@ const Swap = () => {
                 </button>
               )}
             </div>
-            <div className="pt-2 text-sm">
+            <div className="min-h-[20px] pt-2 text-sm">
               {topPrice && topPrice !== "$0.00" ? `${topPrice}` : ""}
             </div>
           </SwapBlock>
@@ -122,7 +123,7 @@ const Swap = () => {
           <SwapBlock>
             <div className="flex items-center">
               <SwapInput
-                value={`${isSwitch ? swapTopValue : swapBottomValue}`}
+                value={`${isSwitch ? swapTopValue : 0}`}
                 handleSwapValue={handleSwapBottomValue}
               />
               {isSwitch ? (
@@ -147,7 +148,7 @@ const Swap = () => {
                 </button>
               )}
             </div>
-            <div className="pt-2 text-sm">
+            <div className="min-h-[20px] pt-2 text-sm">
               {/* $
               {!isNaN(swapTopValue) && swapTopValue !== 0 ? `$${topPrice}` : ""} */}
             </div>
