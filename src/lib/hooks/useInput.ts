@@ -1,22 +1,22 @@
 import { useState } from "react";
 
 type UseInput = () => [
-  value: number,
+  value: string,
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 ];
 
 const useInput: UseInput = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    e.target.value = value
-      .replace(/[^\d.]/g, "")
-      .replace(/^(\d*\.?\d*).*/, "$1");
-
-    setValue(+value);
+    const { value } = e.target;
+    if (REG_EX.test(value)) {
+      setValue(value);
+    }
   };
 
   return [value, handleChange];
 };
 export default useInput;
+
+const REG_EX = /^[0-9]*\.?[0-9]*$/;
