@@ -38,7 +38,7 @@ const Swap = () => {
 
   return (
     <>
-      <section className="mx-auto max-w-[480px]">
+      <section className="mx-auto max-w-[480px] px-2">
         <div className="rounded-2xl border border-uni-gray-11 bg-white px-2 pb-2 pt-3">
           <div className="relative mb-[10px] flex items-center justify-between pl-3">
             <div className="flex gap-4">
