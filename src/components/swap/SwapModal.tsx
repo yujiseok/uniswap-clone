@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { ReactComponent as Close } from "../assets/close.svg";
-import eth from "../assets/eth.png";
-import { ReactComponent as RedCheck } from "../assets/red-check.svg";
-import usdc from "../assets/usdc.png";
-import wbtc from "../assets/wbtc.png";
-import Hr from "./Hr";
+import { ReactComponent as Close } from "../../assets/close.svg";
+import eth from "../../assets/eth.png";
+import { ReactComponent as RedCheck } from "../../assets/red-check.svg";
+import usdc from "../../assets/usdc.png";
+import wbtc from "../../assets/wbtc.png";
+import Hr from "../Hr";
 
 interface SwapModalProps {
   handleClickModal: () => void;
@@ -69,7 +69,7 @@ const SwapModal = ({
               type="text"
               placeholder="이름 검색 또는 주소 붙여 넣기"
               autoFocus
-              className="modal-search-input border-uni-gray-11 h-10 w-full rounded-xl border py-4 pl-10 pr-4 outline-none focus:bg-transparent"
+              className="modal-search-input h-10 w-full rounded-xl border border-uni-gray-11 py-4 pl-10 pr-4 outline-none focus:bg-transparent"
             />
           </div>
 

@@ -3,15 +3,16 @@ import { useState } from "react";
 import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Config } from "../../assets/config.svg";
 import { ReactComponent as DownArrow } from "../../assets/down-arrow.svg";
-import useInput from "../../hooks/useInput";
-import useToggle from "../../hooks/useToggle";
+import useInput from "../../lib/hooks/useInput";
+import useToggle from "../../lib/hooks/useToggle";
+import formatNumber from "../../lib/utils/formatNumber";
 import BottomBanner from "../BottomBanner";
 import ConfigDropdown, { maxArr } from "../dropdown/ConfigDropdown";
 import Etherscan from "../Etherscan";
 import ModalPortal from "../ModalPortal";
-import SwapModal, { tokenArr } from "../SwapModal";
 import SwapBlock from "./SwapBlock";
 import SwapInput from "./SwapInput";
+import SwapModal, { tokenArr } from "./SwapModal";
 
 const Swap = () => {
   const [isClose, handleClickClose] = useToggle(false);
@@ -31,8 +32,8 @@ const Swap = () => {
     setMaxLabel(e.currentTarget.textContent as MaxLabel);
   };
 
-  const tokenPrice = tokenValue.price;
-  const topPrice = (swapTopValue * tokenPrice).toLocaleString();
+  const topTokenPrice = formatNumber(swapTopValue, tokenValue.price);
+  const topPrice = !isNaN(+swapTopValue) ? topTokenPrice : "";
 
   return (
     <>
@@ -41,7 +42,7 @@ const Swap = () => {
           <div className="relative mb-[10px] flex items-center justify-between pl-3">
             <div className="flex gap-4">
               <div>스왑</div>
-              <button className="text-uni-gray-12 flex items-center gap-1 transition-opacity hover:opacity-90">
+              <button className="flex items-center gap-1 text-uni-gray-12 transition-opacity hover:opacity-90">
                 구입하다 <div className="h-2 w-2 rounded-full bg-uni-blue-1" />
               </button>
             </div>
@@ -54,7 +55,7 @@ const Swap = () => {
               } hover:opacity-70`}
             >
               {maxLabel !== "자동" ? (
-                <div className="text-uni-gray-12 pl-3 text-xs">{`${maxValue.toFixed(
+                <div className="pl-3 text-xs text-uni-gray-12">{`${maxValue.toFixed(
                   2
                 )}% 미끄러짐`}</div>
               ) : null}
@@ -105,9 +106,7 @@ const Swap = () => {
               )}
             </div>
             <div className="pt-2 text-sm">
-              {isSwitch && !isNaN(swapTopValue) && swapTopValue !== 0
-                ? "0"
-                : `$${topPrice}`}
+              {topPrice && topPrice !== "$0.00" ? `${topPrice}` : ""}
             </div>
           </SwapBlock>
 
@@ -149,9 +148,8 @@ const Swap = () => {
               )}
             </div>
             <div className="pt-2 text-sm">
-              {isSwitch && !isNaN(swapTopValue) && swapTopValue !== 0
-                ? `$${topPrice}`
-                : "0"}
+              {/* $
+              {!isNaN(swapTopValue) && swapTopValue !== 0 ? `$${topPrice}` : ""} */}
             </div>
           </SwapBlock>
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Question } from "../../assets/question.svg";
-import useToggle from "../../hooks/useToggle";
+import useToggle from "../../lib/hooks/useToggle";
 import Hr from "../Hr";
 import RouterDropdown from "./RouterDropdown";
 
@@ -27,7 +27,7 @@ const ConfigDropdown = ({
   const handleClickActive = (i: number) => setActive(i);
 
   return (
-    <div className="text-uni-gray-12 absolute right-0 top-full z-10 mt-[10px] flex max-w-[330px] flex-col gap-4 rounded-2xl border border-uni-gray-11 bg-white px-4 pt-4 shadow-swap-config">
+    <div className="absolute right-0 top-full z-10 mt-[10px] flex max-w-[330px] flex-col gap-4 rounded-2xl border border-uni-gray-11 bg-white px-4 pt-4 text-uni-gray-12 shadow-swap-config">
       <div className="flex items-center gap-4">
         <div>
           <div>자동 라우터 API</div>
