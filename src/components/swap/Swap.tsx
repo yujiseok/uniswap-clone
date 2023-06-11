@@ -13,6 +13,7 @@ import ModalPortal from "../ModalPortal";
 import SwapBlock from "./SwapBlock";
 import SwapInput from "./SwapInput";
 import SwapModal, { tokenArr } from "./SwapModal";
+import SwapPrice from "./SwapPrice";
 
 const Swap = () => {
   const [isClose, handleClickClose] = useToggle(false);
@@ -106,9 +107,9 @@ const Swap = () => {
                 </button>
               )}
             </div>
-            <div className="min-h-[20px] pt-2 text-sm">
+            <SwapPrice>
               {topPrice && topPrice !== "$0.00" ? `${topPrice}` : ""}
-            </div>
+            </SwapPrice>
           </SwapBlock>
 
           <div className="relative -my-[18px] flex justify-center">
@@ -148,10 +149,10 @@ const Swap = () => {
                 </button>
               )}
             </div>
-            <div className="min-h-[20px] pt-2 text-sm">
+            <SwapPrice>
               {/* $
               {!isNaN(swapTopValue) && swapTopValue !== 0 ? `$${topPrice}` : ""} */}
-            </div>
+            </SwapPrice>
           </SwapBlock>
 
           <button className="mt-1 w-full rounded-[20px] bg-uni-pink-1 p-4 text-xl font-semibold text-uni-pink-2 transition-colors duration-[250ms] hover:bg-uni-pink-4">
