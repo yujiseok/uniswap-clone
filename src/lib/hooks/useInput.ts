@@ -5,8 +5,8 @@ type UseInput = () => [
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 ];
 
-const useInput: UseInput = () => {
-  const [value, setValue] = useState("");
+const useInput: UseInput = (initialState = "") => {
+  const [value, setValue] = useState(initialState);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;

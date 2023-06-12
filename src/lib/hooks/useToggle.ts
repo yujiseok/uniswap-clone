@@ -1,11 +1,13 @@
 import { useState } from "react";
 
-type UseToggle = (initialState: boolean) => [boolean, () => void];
+type UseToggle = () => [boolean, () => void];
 
-const useToggle: UseToggle = (initialState) => {
+const useToggle: UseToggle = (initialState = false) => {
   const [toggle, setToggle] = useState(initialState);
 
-  const handleClickToggle = () => setToggle((prev) => !prev);
+  const handleClickToggle = () => {
+    setToggle((prev) => !prev);
+  };
 
   return [toggle, handleClickToggle];
 };
