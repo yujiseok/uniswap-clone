@@ -10,10 +10,10 @@ import formatNumber from "../../lib/utils/formatNumber";
 import BottomBanner from "../BottomBanner";
 import ConfigDropdown, { maxArr } from "../dropdown/ConfigDropdown";
 import Etherscan from "../Etherscan";
-import ModalPortal from "../ModalPortal";
+import ModalPortal from "../modal/ModalPortal";
+import SwapModal, { tokenArr } from "../modal/SwapModal";
 import SwapBlock from "./SwapBlock";
 import SwapInput from "./SwapInput";
-import SwapModal, { tokenArr } from "./SwapModal";
 import SwapPrice from "./SwapPrice";
 
 const Swap = () => {
