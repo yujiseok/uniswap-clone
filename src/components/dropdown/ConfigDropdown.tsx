@@ -19,10 +19,10 @@ const ConfigDropdown = ({
   handleClickMaxLabel,
   setMaxValue,
 }: Props) => {
-  const [toggle, handClickToggle] = useToggle(false);
-  const [isMaxOpen, handleClickMaxOpen] = useToggle(false);
+  const [toggle, handClickToggle] = useToggle();
+  const [isMaxOpen, handleClickMaxOpen] = useToggle();
   const [active, setActive] = useState(0);
-  const [isTimeOpen, handleClickTimeOpen] = useToggle(false);
+  const [isTimeOpen, handleClickTimeOpen] = useToggle();
   const [timeValue, setTimeValue] = useState(0);
 
   const handleClickActive = (i: number) => setActive(i);
