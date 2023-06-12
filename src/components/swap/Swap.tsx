@@ -5,6 +5,7 @@ import { ReactComponent as Config } from "../../assets/config.svg";
 import { ReactComponent as DownArrow } from "../../assets/down-arrow.svg";
 import useInput from "../../lib/hooks/useInput";
 import useToggle from "../../lib/hooks/useToggle";
+import calculatePrice from "../../lib/utils/calculatePrice";
 import formatNumber from "../../lib/utils/formatNumber";
 import BottomBanner from "../BottomBanner";
 import ConfigDropdown, { maxArr } from "../dropdown/ConfigDropdown";
@@ -16,27 +17,29 @@ import SwapModal, { tokenArr } from "./SwapModal";
 import SwapPrice from "./SwapPrice";
 
 const Swap = () => {
-  const [isClose, handleClickClose] = useToggle(false);
-  const [isSwitch, handleClickSwitch] = useToggle(false);
-  const [isDropdownOpen, handleClickDropdown] = useToggle(false);
-  const [isModalOpen, handleClickModal] = useToggle(false);
-
-  const [swapTopValue, handleSwapTopValue] = useInput();
-  const [swapBottomValue, handleSwapBottomValue] = useInput();
-
+  const [isClose, handleClickClose] = useToggle();
+  const [isSwitch, handleClickSwitch] = useToggle();
+  const [isDropdownOpen, handleClickDropdown] = useToggle();
+  const [isModalOpen, handleClickModal] = useToggle();
+  const [isModalOpen2, handleClickModal2] = useToggle();
   const [maxLabel, setMaxLabel] = useState<MaxLabel>(maxArr[0].label);
   const [maxValue, setMaxValue] = useState(0.1);
   const [tokenValue, setTokenValue] = useState<Token>(tokenArr[0]);
+  const [tokenValue2, setTokenValue2] = useState<Token>();
+  const [swapTopValue, handleSwapTopValue] = useInput();
+  const test = calculatePrice(tokenValue, tokenValue2, swapTopValue);
+
+  const [swapBottomValue, handleSwapBottomValue] = useInput();
 
   const handleClickMaxLabel = (e: React.MouseEvent<HTMLButtonElement>) => {
     // if (maxValue === 0) setMaxLabel(maxArr[0].label);
     setMaxLabel(e.currentTarget.textContent as MaxLabel);
   };
 
-  const topTokenPrice = formatNumber(swapTopValue, tokenValue.price);
-  const topPrice = !isNaN(+swapTopValue) ? topTokenPrice : "";
-  // const bottomPrice = +swapTopValue / tokenValue.price; // 토큰 선택 가격으로 나눠야함
+  const topTokenPrice = formatNumber(swapTopValue, tokenValue.price); // 유닛 추가한 것
 
+  const topPrice = !isNaN(Number(swapTopValue)) ? topTokenPrice : "";
+  console.log(test);
   return (
     <>
       <section className="mx-auto max-w-[480px] px-2">
@@ -79,81 +82,152 @@ const Swap = () => {
             ) : null}
           </div>
 
-          <SwapBlock>
-            <div className="flex items-center">
-              <SwapInput
-                value={`${isSwitch ? 0 : swapTopValue}`}
-                handleSwapValue={handleSwapTopValue}
-              />
-              {isSwitch ? (
-                <button className="flex items-center gap-2 rounded-2xl bg-uni-pink-2 p-[6px] pl-[10px] pr-[6px] text-xl leading-5 text-white shadow-uni-select">
-                  토큰 선택
-                  <Chevron className="stroke-white" />
-                </button>
-              ) : (
-                <button
-                  className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
-                  onClick={handleClickModal}
-                >
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={tokenValue.src}
-                      alt={tokenValue.token}
-                      className="h-6 w-6"
-                    />
-                    <span>{tokenValue?.ticker}</span>
-                  </div>
-                  <Chevron />
-                </button>
-              )}
-            </div>
-            <SwapPrice>
-              {topPrice && topPrice !== "$0.00" ? `${topPrice}` : ""}
-            </SwapPrice>
-          </SwapBlock>
+          {!isSwitch ? (
+            <>
+              <SwapBlock>
+                <div className="flex items-center">
+                  <SwapInput
+                    value={`${swapTopValue ? swapTopValue : ""}`}
+                    handleSwapValue={handleSwapTopValue}
+                  />
 
-          <div className="relative -my-[18px] flex justify-center">
-            <button
-              className="grid h-10 w-10 place-items-center rounded-xl border-4 border-white bg-uni-gray-7"
-              onClick={handleClickSwitch}
-            >
-              <DownArrow />
-            </button>
-          </div>
+                  <button
+                    className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
+                    onClick={handleClickModal}
+                  >
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={tokenValue.src}
+                        alt={tokenValue.token}
+                        className="h-6 w-6"
+                      />
+                      <span>{tokenValue.ticker}</span>
+                    </div>
+                    <Chevron />
+                  </button>
+                </div>
+                <SwapPrice>
+                  {topPrice && topPrice !== "$0.00" && `${topPrice}`}
+                </SwapPrice>
+              </SwapBlock>
 
-          <SwapBlock>
-            <div className="flex items-center">
-              <SwapInput
-                value={`${isSwitch ? swapTopValue : 0}`}
-                handleSwapValue={handleSwapBottomValue}
-              />
-              {isSwitch ? (
+              <div className="relative -my-[18px] flex justify-center">
                 <button
-                  className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
-                  onClick={handleClickModal}
+                  className="grid h-10 w-10 place-items-center rounded-xl border-4 border-white bg-uni-gray-7"
+                  onClick={handleClickSwitch}
                 >
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={tokenValue.src}
-                      alt={tokenValue.token}
-                      className="h-6 w-6"
-                    />
-                    <span>{tokenValue?.ticker}</span>
-                  </div>
-                  <Chevron />
+                  <DownArrow />
                 </button>
-              ) : (
-                <button className="flex items-center gap-2 rounded-2xl bg-uni-pink-2 p-[6px] pl-[10px] pr-[6px] text-xl leading-5 text-white shadow-uni-select">
-                  토큰 선택
-                  <Chevron className="stroke-white" />
+              </div>
+
+              <SwapBlock>
+                <div className="flex items-center">
+                  <SwapInput
+                    value={test}
+                    handleSwapValue={handleSwapBottomValue}
+                  />
+                  {tokenValue2?.ticker ? (
+                    <button
+                      className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
+                      onClick={handleClickModal2}
+                    >
+                      <div className="flex items-center gap-2">
+                        <img
+                          src={tokenValue2?.src}
+                          alt={tokenValue2?.token}
+                          className="h-6 w-6"
+                        />
+                        <span>{tokenValue2?.ticker}</span>
+                      </div>
+                      <Chevron />
+                    </button>
+                  ) : (
+                    <button
+                      className="flex items-center gap-2 rounded-2xl bg-uni-pink-2 p-[6px] pl-[10px] pr-[6px] text-xl leading-5 text-white shadow-uni-select"
+                      onClick={handleClickModal2}
+                    >
+                      토큰 선택
+                      <Chevron className="stroke-white" />
+                    </button>
+                  )}
+                </div>
+                <SwapPrice>
+                  {tokenValue2?.ticker && topPrice !== "$0.00" && `${topPrice}`}
+                </SwapPrice>
+              </SwapBlock>
+            </>
+          ) : (
+            <>
+              <SwapBlock>
+                <div className="flex items-center">
+                  <SwapInput
+                    value={test}
+                    handleSwapValue={handleSwapBottomValue}
+                  />
+                  {tokenValue2?.ticker ? (
+                    <button
+                      className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
+                      onClick={handleClickModal2}
+                    >
+                      <div className="flex items-center gap-2">
+                        <img
+                          src={tokenValue2?.src}
+                          alt={tokenValue2?.token}
+                          className="h-6 w-6"
+                        />
+                        <span>{tokenValue2?.ticker}</span>
+                      </div>
+                      <Chevron />
+                    </button>
+                  ) : (
+                    <button
+                      className="flex items-center gap-2 rounded-2xl bg-uni-pink-2 p-[6px] pl-[10px] pr-[6px] text-xl leading-5 text-white shadow-uni-select"
+                      onClick={handleClickModal2}
+                    >
+                      토큰 선택
+                      <Chevron className="stroke-white" />
+                    </button>
+                  )}
+                </div>
+                <SwapPrice>{topPrice}</SwapPrice>
+              </SwapBlock>
+
+              <div className="relative -my-[18px] flex justify-center">
+                <button
+                  className="grid h-10 w-10 place-items-center rounded-xl border-4 border-white bg-uni-gray-7"
+                  onClick={handleClickSwitch}
+                >
+                  <DownArrow />
                 </button>
-              )}
-            </div>
-            <SwapPrice>
-              {/* $
-              {!isNaN(swapTopValue) && swapTopValue !== 0 ? `$${topPrice}` : ""} */}
-            </SwapPrice>
-          </SwapBlock>
+              </div>
+              <SwapBlock>
+                <div className="flex items-center">
+                  <SwapInput
+                    value={`${swapTopValue ? swapTopValue : ""}`}
+                    handleSwapValue={handleSwapTopValue}
+                  />
+
+                  <button
+                    className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
+                    onClick={handleClickModal}
+                  >
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={tokenValue.src}
+                        alt={tokenValue.token}
+                        className="h-6 w-6"
+                      />
+                      <span>{tokenValue?.ticker}</span>
+                    </div>
+                    <Chevron />
+                  </button>
+                </div>
+                <SwapPrice>
+                  {topPrice && topPrice !== "$0.00" && `${topPrice}`}
+                </SwapPrice>
+              </SwapBlock>
+            </>
+          )}
 
           <button className="mt-1 w-full rounded-[20px] bg-uni-pink-1 p-4 text-xl font-semibold text-uni-pink-2 transition-colors duration-[250ms] hover:bg-uni-pink-4">
             지갑 연결
@@ -169,7 +243,7 @@ const Swap = () => {
       <Etherscan />
 
       <AnimatePresence>
-        {isModalOpen ? (
+        {isModalOpen && (
           <ModalPortal>
             <SwapModal
               handleClickModal={handleClickModal}
@@ -177,7 +251,16 @@ const Swap = () => {
               setTokenValue={setTokenValue}
             />
           </ModalPortal>
-        ) : null}
+        )}
+        {isModalOpen2 && (
+          <ModalPortal>
+            <SwapModal
+              handleClickModal={handleClickModal2}
+              tokenValue={tokenValue2}
+              setTokenValue={setTokenValue2}
+            />
+          </ModalPortal>
+        )}
       </AnimatePresence>
     </>
   );

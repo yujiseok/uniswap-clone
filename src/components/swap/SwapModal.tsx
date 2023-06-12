@@ -9,7 +9,7 @@ import Hr from "../Hr";
 
 interface SwapModalProps {
   handleClickModal: () => void;
-  tokenValue: Token;
+  tokenValue?: Token;
   setTokenValue: React.Dispatch<Token>;
 }
 
@@ -78,7 +78,7 @@ const SwapModal = ({
               <li key={item.ticker}>
                 <button
                   className={`${
-                    item.ticker === tokenValue.ticker
+                    item.ticker === tokenValue?.ticker
                       ? "border-uni-blue-2 bg-uni-blue-3 text-uni-blue-2"
                       : "border-uni-gray-11 bg-white"
                   } flex gap-2 rounded-2xl border py-[6px] pl-[6px] pr-3`}
@@ -104,7 +104,7 @@ const SwapModal = ({
             <li
               key={item.ticker}
               className={`${
-                item.ticker === tokenValue.ticker
+                item.ticker === tokenValue?.ticker
                   ? "pointer-events-none flex items-center justify-between opacity-40"
                   : "cursor-pointer hover:bg-uni-gray-10"
               }  px-5 py-2`}
@@ -126,7 +126,7 @@ const SwapModal = ({
                 </div>
               </div>
 
-              {item.ticker === tokenValue.ticker ? <RedCheck /> : null}
+              {item.ticker === tokenValue?.ticker ? <RedCheck /> : null}
             </li>
           ))}
         </ul>
