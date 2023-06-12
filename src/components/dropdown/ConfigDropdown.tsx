@@ -3,6 +3,7 @@ import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Question } from "../../assets/question.svg";
 import useToggle from "../../lib/hooks/useToggle";
 import Hr from "../Hr";
+import AnimatedDropdown from "./AnimatedDropdown";
 import RouterDropdown from "./RouterDropdown";
 
 interface Props {
@@ -27,7 +28,7 @@ const ConfigDropdown = ({
   const handleClickActive = (i: number) => setActive(i);
 
   return (
-    <div className="absolute right-0 top-full z-10 mt-[10px] flex max-w-[330px] flex-col gap-4 rounded-2xl border border-uni-gray-11 bg-white px-4 pt-4 text-uni-gray-12 shadow-swap-config">
+    <div className="absolute right-0 top-full z-10 mt-[10px] flex max-w-[330px] flex-col gap-4 rounded-2xl border border-uni-gray-11 bg-white p-4 text-uni-gray-12 shadow-swap-config">
       <div className="flex items-center gap-4">
         <div>
           <div>자동 라우터 API</div>
@@ -77,12 +78,7 @@ const ConfigDropdown = ({
             />
           </button>
         </div>
-        <div
-          className={`${
-            isMaxOpen ? "h-[55px]" : "h-0 overflow-hidden"
-          } w-full transition-[height]`}
-          // ref={maxRef}
-        >
+        <AnimatedDropdown isOpen={isMaxOpen}>
           <div className="flex items-center justify-between gap-4 pt-3">
             <div className="flex rounded-2xl border border-uni-gray-11 p-1">
               {maxArr.map((item) => (
@@ -107,7 +103,7 @@ const ConfigDropdown = ({
               <div>%</div>
             </div>
           </div>
-        </div>
+        </AnimatedDropdown>
       </div>
       <Hr />
       <div className="flex items-center justify-between">
@@ -127,11 +123,7 @@ const ConfigDropdown = ({
           />
         </button>
       </div>
-      <div
-        className={`${
-          isTimeOpen ? "h-[52px]" : "h-0 overflow-hidden"
-        } transition-[height]`}
-      >
+      <AnimatedDropdown isOpen={isTimeOpen}>
         <div
           className={`${
             timeValue > 4320
@@ -147,7 +139,7 @@ const ConfigDropdown = ({
           />
           <div className="text-uni-black-1">분</div>
         </div>
-      </div>
+      </AnimatedDropdown>
     </div>
   );
 };
