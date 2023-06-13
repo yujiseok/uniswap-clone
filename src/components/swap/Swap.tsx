@@ -25,17 +25,12 @@ const Swap = () => {
   const [isDropdownOpen, handleClickDropdown] = useToggle();
   const [isTopModalOpen, handleClickTopModal] = useToggle();
   const [isBottomModalOpen, handleClickBottomModal] = useToggle();
-
   const [isOpen, handleClickOpen] = useToggle();
-
+  const [swapTopValue, handleSwapTopValue] = useInput();
   const [maxLabel, setMaxLabel] = useState<MaxLabel>(maxArr[0].label);
   const [maxValue, setMaxValue] = useState(0.1);
   const [topToken, setTopToken] = useState<Token>(tokenArr[0]);
   const [bottomToken, setBottomToken] = useState<Token>();
-  const [swapTopValue, handleSwapTopValue] = useInput();
-  const bottomTokenPrice = calculatePrice(topToken, bottomToken, swapTopValue);
-
-  const [swapBottomValue, handleSwapBottomValue] = useInput();
 
   const handleClickMaxLabel = (e: React.MouseEvent<HTMLButtonElement>) => {
     // if (maxValue === 0) setMaxLabel(maxArr[0].label);
@@ -60,7 +55,8 @@ const Swap = () => {
     modalHandler();
   };
 
-  const topTokenPrice = formatNumber(swapTopValue, topToken.price); // 유닛 추가한 것
+  const bottomTokenPrice = calculatePrice(topToken, bottomToken, swapTopValue);
+  const topTokenPrice = formatNumber(swapTopValue, topToken.price);
   const usd = !isNaN(Number(swapTopValue)) ? topTokenPrice : "";
 
   return (
@@ -109,7 +105,7 @@ const Swap = () => {
               <SwapBlock>
                 <div className="flex items-center">
                   <SwapInput
-                    value={`${swapTopValue ? swapTopValue : ""}`}
+                    value={swapTopValue}
                     handleSwapValue={handleSwapTopValue}
                   />
 
@@ -142,10 +138,7 @@ const Swap = () => {
 
               <SwapBlock>
                 <div className="flex items-center">
-                  <SwapInput
-                    value={bottomTokenPrice}
-                    handleSwapValue={handleSwapBottomValue}
-                  />
+                  <SwapInput value={bottomTokenPrice} />
                   {bottomToken ? (
                     <button
                       className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
@@ -172,7 +165,7 @@ const Swap = () => {
                   )}
                 </div>
                 <SwapPrice>
-                  {bottomToken && usd !== "$0.00" && `${usd}`}
+                  {bottomTokenPrice && usd !== "$0.00" && `${usd}`}
                 </SwapPrice>
               </SwapBlock>
             </>
@@ -180,10 +173,7 @@ const Swap = () => {
             <>
               <SwapBlock>
                 <div className="flex items-center">
-                  <SwapInput
-                    value={bottomTokenPrice}
-                    handleSwapValue={handleSwapBottomValue}
-                  />
+                  <SwapInput value={bottomTokenPrice} />
                   {bottomToken ? (
                     <button
                       className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
@@ -209,7 +199,9 @@ const Swap = () => {
                     </button>
                   )}
                 </div>
-                <SwapPrice>{usd}</SwapPrice>
+                <SwapPrice>
+                  {bottomTokenPrice && usd !== "$0.00" && `${usd}`}
+                </SwapPrice>
               </SwapBlock>
 
               <div className="relative -my-[18px] flex justify-center">
@@ -223,7 +215,7 @@ const Swap = () => {
               <SwapBlock>
                 <div className="flex items-center">
                   <SwapInput
-                    value={`${swapTopValue ? swapTopValue : ""}`}
+                    value={swapTopValue}
                     handleSwapValue={handleSwapTopValue}
                   />
 
@@ -247,7 +239,7 @@ const Swap = () => {
             </>
           )}
 
-          {bottomTokenPrice ? (
+          {swapTopValue && bottomTokenPrice ? (
             <div className="border-uni mt-1 rounded-2xl border p-4 text-sm font-normal">
               <button
                 className="flex w-full justify-between"
