@@ -16,10 +16,7 @@ import { ReactComponent as Poll } from "../assets/poll.svg";
 import Polygon from "../assets/polygon.svg";
 import { ReactComponent as SearchIcon } from "../assets/searchIcon.svg";
 import { ReactComponent as Twitter } from "../assets/twitter.svg";
-
-// 드롭다운용
-
-// 티커드롭다운
+import useClickOutside from "../lib/hooks/useClickOutside";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
@@ -27,38 +24,13 @@ const Navbar = () => {
   const [tickerUrl, setTickerUrl] = useState(Ethereum);
   const [show, setShow] = useState(false);
 
+  const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const tickerTriggerRef = useRef<HTMLButtonElement>(null);
   const tickerRef = useRef<HTMLUListElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        toggle &&
-        dropdownRef.current &&
-        !dropdownRef.current?.contains(e.target as HTMLElement)
-      ) {
-        console.log(e.target);
-        setToggle(!toggle);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [toggle]);
-
-  // useEffect(() => {
-  //   const handleClickOutside = (e: MouseEvent) => {
-  //     if (
-  //       isTickerOpen &&
-  //       !tickerRef.current?.contains(e.target as HTMLElement)
-  //     ) {
-  //       setIsTickerOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleClickOutside);
-
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, [isTickerOpen]);
+  useClickOutside(dropdownTriggerRef, dropdownRef, undefined, setToggle);
+  useClickOutside(tickerTriggerRef, tickerRef, undefined, setIsTickerOpen);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,8 +67,9 @@ const Navbar = () => {
               {item.label}
             </li>
           ))}
-          <li className="cursor-pointer rounded-lg  hover:bg-uni-gray-3">
+          <li className="cursor-pointer rounded-lg hover:bg-uni-gray-3">
             <button
+              ref={dropdownTriggerRef}
               className="p-2"
               onClick={() => {
                 setToggle((prev) => !prev);
@@ -148,7 +121,7 @@ const Navbar = () => {
               placeholder="검색 토큰 및 NFT 컬렉션"
               className="w-full bg-transparent outline-none "
             />
-            <div className="text-uni-gray-12 flex h-5 w-5 items-center justify-center rounded bg-uni-search-slash-1 text-xs opacity-60">
+            <div className="flex h-5 w-5 items-center justify-center rounded bg-uni-search-slash-1 text-xs text-uni-gray-12 opacity-60">
               /
             </div>
           </div>
@@ -156,6 +129,7 @@ const Navbar = () => {
 
         <div className="relative flex flex-1 items-center justify-end gap-3">
           <button
+            ref={tickerTriggerRef}
             className="flex gap-2 rounded-lg p-2 hover:bg-uni-gray-3"
             onClick={() => setIsTickerOpen((prev) => !prev)}
           >

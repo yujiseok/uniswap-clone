@@ -1,10 +1,11 @@
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Config } from "../../assets/config.svg";
 import { ReactComponent as DownArrow } from "../../assets/down-arrow.svg";
 import { ReactComponent as Fuel } from "../../assets/fuel.svg";
 import { MAX_ARR, TOKEN_ARR } from "../../constants/constants";
+import useClickOutside from "../../lib/hooks/useClickOutside";
 import useInput from "../../lib/hooks/useInput";
 import useToggle from "../../lib/hooks/useToggle";
 import calculatePrice from "../../lib/utils/calculatePrice";
@@ -25,15 +26,24 @@ import SwapPrice from "./SwapPrice";
 const Swap = () => {
   const [isClose, handleClickClose] = useToggle();
   const [isSwitch, handleClickSwitch] = useToggle();
-  const [isDropdownOpen, handleClickDropdown] = useToggle();
   const [isTopModalOpen, handleClickTopModal] = useToggle();
   const [isBottomModalOpen, handleClickBottomModal] = useToggle();
   const [isOpen, handleClickOpen] = useToggle();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [swapTopValue, handleSwapTopValue] = useInput();
   const [maxLabel, setMaxLabel] = useState<MaxLabel>(MAX_ARR[0].label);
   const [maxValue, setMaxValue] = useState(0.1);
   const [topToken, setTopToken] = useState<Token>(TOKEN_ARR[0]);
   const [bottomToken, setBottomToken] = useState<Token>();
+  const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(
+    dropdownTriggerRef,
+    dropdownRef,
+    undefined,
+    setIsDropdownOpen
+  );
 
   const handleClickMaxLabel = (e: React.MouseEvent<HTMLButtonElement>) => {
     // if (maxValue === 0) setMaxLabel(MAX_ARR[0].label);
@@ -91,8 +101,9 @@ const Swap = () => {
                 )}% 미끄러짐`}</div>
               ) : null}
               <button
+                ref={dropdownTriggerRef}
                 className="py-[6px] pr-3 transition-opacity"
-                onClick={handleClickDropdown}
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
               >
                 <Config className="text-uni-gray-12" />
               </button>
@@ -103,6 +114,7 @@ const Swap = () => {
                 maxValue={maxValue}
                 handleClickMaxLabel={handleClickMaxLabel}
                 setMaxValue={setMaxValue}
+                ref={dropdownRef}
               />
             ) : null}
           </div>

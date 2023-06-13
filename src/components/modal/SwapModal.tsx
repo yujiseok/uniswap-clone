@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as RedCheck } from "../../assets/red-check.svg";
 import { TOKEN_ARR } from "../../constants/constants";
+import useClickOutside from "../../lib/hooks/useClickOutside";
 import Hr from "../Hr";
 
 interface SwapModalProps {
@@ -20,23 +21,7 @@ const SwapModal = ({
 }: SwapModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
-      if (
-        !modalRef.current ||
-        modalRef.current.contains(e.target as HTMLElement)
-      ) {
-        return;
-      }
-      handleClickModal();
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [handleClickModal]);
+  useClickOutside(modalRef, undefined, handleClickModal);
 
   return (
     <motion.div
