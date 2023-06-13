@@ -5,18 +5,21 @@ type CalculatePriceFn = (
 ) => string;
 
 const calculatePrice: CalculatePriceFn = (topToken, bottomToken, swapValue) => {
-  let bottomPrice = 0;
+  let bottomPrice = "";
 
   if (bottomToken) {
     if (topToken.price > bottomToken.price) {
-      bottomPrice = Number(swapValue) * topToken.price;
+      bottomPrice = (Number(swapValue) * topToken.price).toString();
     } else if (topToken.price < bottomToken.price) {
-      bottomPrice = (Number(swapValue) * topToken.price) / bottomToken.price;
+      bottomPrice = (
+        (Number(swapValue) * topToken.price) /
+        bottomToken.price
+      ).toString();
     } else {
-      bottomPrice = Number(swapValue);
+      bottomPrice = swapValue;
     }
   }
 
-  return bottomPrice.toString();
+  return bottomPrice;
 };
 export default calculatePrice;
