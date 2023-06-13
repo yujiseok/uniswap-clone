@@ -23,17 +23,17 @@ const Swap = () => {
   const [isClose, handleClickClose] = useToggle();
   const [isSwitch, handleClickSwitch] = useToggle();
   const [isDropdownOpen, handleClickDropdown] = useToggle();
-  const [isModalOpen, handleClickModal] = useToggle();
-  const [isModalOpen2, handleClickModal2] = useToggle();
+  const [isTopModalOpen, handleClickTopModal] = useToggle();
+  const [isBottomModalOpen, handleClickBottomModal] = useToggle();
 
   const [isOpen, handleClickOpen] = useToggle();
 
   const [maxLabel, setMaxLabel] = useState<MaxLabel>(maxArr[0].label);
   const [maxValue, setMaxValue] = useState(0.1);
-  const [tokenValue, setTokenValue] = useState<Token>(tokenArr[0]);
-  const [tokenValue2, setTokenValue2] = useState<Token>();
+  const [topToken, setTopToken] = useState<Token>(tokenArr[0]);
+  const [bottomToken, setBottomToken] = useState<Token>();
   const [swapTopValue, handleSwapTopValue] = useInput();
-  const bottomPrice = calculatePrice(tokenValue, tokenValue2, swapTopValue);
+  const bottomTokenPrice = calculatePrice(topToken, bottomToken, swapTopValue);
 
   const [swapBottomValue, handleSwapBottomValue] = useInput();
 
@@ -42,8 +42,26 @@ const Swap = () => {
     setMaxLabel(e.currentTarget.textContent as MaxLabel);
   };
 
-  const topTokenPrice = formatNumber(swapTopValue, tokenValue.price); // 유닛 추가한 것
-  const topPrice = !isNaN(Number(swapTopValue)) ? topTokenPrice : "";
+  const handleClickTokenValue: HandleClickTokenValue = (
+    item,
+    modalHandler,
+    setToken
+  ) => {
+    if (
+      topToken.ticker === item?.ticker ||
+      bottomToken?.ticker === item?.ticker
+    ) {
+      handleClickSwitch();
+      modalHandler();
+      return;
+    }
+
+    setToken(item);
+    modalHandler();
+  };
+
+  const topTokenPrice = formatNumber(swapTopValue, topToken.price); // 유닛 추가한 것
+  const usd = !isNaN(Number(swapTopValue)) ? topTokenPrice : "";
 
   return (
     <>
@@ -97,22 +115,20 @@ const Swap = () => {
 
                   <button
                     className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
-                    onClick={handleClickModal}
+                    onClick={handleClickTopModal}
                   >
                     <div className="flex items-center gap-2">
                       <img
-                        src={tokenValue.src}
-                        alt={tokenValue.token}
+                        src={topToken.src}
+                        alt={topToken.token}
                         className="h-6 w-6"
                       />
-                      <span>{tokenValue.ticker}</span>
+                      <span>{topToken.ticker}</span>
                     </div>
                     <Chevron />
                   </button>
                 </div>
-                <SwapPrice>
-                  {topPrice && topPrice !== "$0.00" && `${topPrice}`}
-                </SwapPrice>
+                <SwapPrice>{usd && usd !== "$0.00" && `${usd}`}</SwapPrice>
               </SwapBlock>
 
               <div className="relative -my-[18px] flex justify-center">
@@ -127,28 +143,28 @@ const Swap = () => {
               <SwapBlock>
                 <div className="flex items-center">
                   <SwapInput
-                    value={bottomPrice}
+                    value={bottomTokenPrice}
                     handleSwapValue={handleSwapBottomValue}
                   />
-                  {tokenValue2?.ticker ? (
+                  {bottomToken ? (
                     <button
                       className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
-                      onClick={handleClickModal2}
+                      onClick={handleClickBottomModal}
                     >
                       <div className="flex items-center gap-2">
                         <img
-                          src={tokenValue2?.src}
-                          alt={tokenValue2?.token}
+                          src={bottomToken.src}
+                          alt={bottomToken.token}
                           className="h-6 w-6"
                         />
-                        <span>{tokenValue2?.ticker}</span>
+                        <span>{bottomToken.ticker}</span>
                       </div>
                       <Chevron />
                     </button>
                   ) : (
                     <button
                       className="flex items-center gap-2 rounded-2xl bg-uni-pink-2 p-[6px] pl-[10px] pr-[6px] text-xl leading-5 text-white shadow-uni-select"
-                      onClick={handleClickModal2}
+                      onClick={handleClickBottomModal}
                     >
                       토큰 선택
                       <Chevron className="stroke-white" />
@@ -156,7 +172,7 @@ const Swap = () => {
                   )}
                 </div>
                 <SwapPrice>
-                  {tokenValue2?.ticker && topPrice !== "$0.00" && `${topPrice}`}
+                  {bottomToken && usd !== "$0.00" && `${usd}`}
                 </SwapPrice>
               </SwapBlock>
             </>
@@ -165,35 +181,35 @@ const Swap = () => {
               <SwapBlock>
                 <div className="flex items-center">
                   <SwapInput
-                    value={bottomPrice}
+                    value={bottomTokenPrice}
                     handleSwapValue={handleSwapBottomValue}
                   />
-                  {tokenValue2?.ticker ? (
+                  {bottomToken ? (
                     <button
                       className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
-                      onClick={handleClickModal2}
+                      onClick={handleClickBottomModal}
                     >
                       <div className="flex items-center gap-2">
                         <img
-                          src={tokenValue2?.src}
-                          alt={tokenValue2?.token}
+                          src={bottomToken.src}
+                          alt={bottomToken.token}
                           className="h-6 w-6"
                         />
-                        <span>{tokenValue2?.ticker}</span>
+                        <span>{bottomToken.ticker}</span>
                       </div>
                       <Chevron />
                     </button>
                   ) : (
                     <button
                       className="flex items-center gap-2 rounded-2xl bg-uni-pink-2 p-[6px] pl-[10px] pr-[6px] text-xl leading-5 text-white shadow-uni-select"
-                      onClick={handleClickModal2}
+                      onClick={handleClickBottomModal}
                     >
                       토큰 선택
                       <Chevron className="stroke-white" />
                     </button>
                   )}
                 </div>
-                <SwapPrice>{topPrice}</SwapPrice>
+                <SwapPrice>{usd}</SwapPrice>
               </SwapBlock>
 
               <div className="relative -my-[18px] flex justify-center">
@@ -213,38 +229,36 @@ const Swap = () => {
 
                   <button
                     className="flex items-center gap-2 rounded-2xl bg-uni-gray-8 py-1 pl-1 pr-2 text-xl font-semibold leading-5 hover:bg-uni-gray-6"
-                    onClick={handleClickModal}
+                    onClick={handleClickTopModal}
                   >
                     <div className="flex items-center gap-2">
                       <img
-                        src={tokenValue.src}
-                        alt={tokenValue.token}
+                        src={topToken.src}
+                        alt={topToken.token}
                         className="h-6 w-6"
                       />
-                      <span>{tokenValue?.ticker}</span>
+                      <span>{topToken?.ticker}</span>
                     </div>
                     <Chevron />
                   </button>
                 </div>
-                <SwapPrice>
-                  {topPrice && topPrice !== "$0.00" && `${topPrice}`}
-                </SwapPrice>
+                <SwapPrice>{usd && usd !== "$0.00" && `${usd}`}</SwapPrice>
               </SwapBlock>
             </>
           )}
 
-          {bottomPrice ? (
+          {bottomTokenPrice ? (
             <div className="border-uni mt-1 rounded-2xl border p-4 text-sm font-normal">
               <button
                 className="flex w-full justify-between"
                 onClick={handleClickOpen}
               >
                 <div>
-                  1 {tokenValue2?.ticker} = {tokenValue.price.toLocaleString()}{" "}
-                  {tokenValue.ticker}{" "}
+                  1 {bottomToken?.ticker} = {topToken.price.toLocaleString()}{" "}
+                  {topToken.ticker}{" "}
                   <span className="text-uni-gray-2">
                     (
-                    {tokenValue.price.toLocaleString("en-US", {
+                    {topToken.price.toLocaleString("en-US", {
                       currency: "USD",
                       style: "currency",
                       minimumFractionDigits: 2,
@@ -289,21 +303,23 @@ const Swap = () => {
       <Etherscan />
 
       <AnimatePresence>
-        {isModalOpen && (
+        {isTopModalOpen && (
           <ModalPortal>
             <SwapModal
-              handleClickModal={handleClickModal}
-              tokenValue={tokenValue}
-              setTokenValue={setTokenValue}
+              handleClickModal={handleClickTopModal}
+              tokenValue={topToken}
+              setToken={setTopToken}
+              handleClickTokenValue={handleClickTokenValue}
             />
           </ModalPortal>
         )}
-        {isModalOpen2 && (
+        {isBottomModalOpen && (
           <ModalPortal>
             <SwapModal
-              handleClickModal={handleClickModal2}
-              tokenValue={tokenValue2}
-              setTokenValue={setTokenValue2}
+              handleClickModal={handleClickBottomModal}
+              tokenValue={bottomToken}
+              setToken={setBottomToken}
+              handleClickTokenValue={handleClickTokenValue}
             />
           </ModalPortal>
         )}

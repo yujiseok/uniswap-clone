@@ -10,13 +10,15 @@ import Hr from "../Hr";
 interface SwapModalProps {
   handleClickModal: () => void;
   tokenValue?: Token;
-  setTokenValue: React.Dispatch<Token>;
+  setToken: React.Dispatch<Token>;
+  handleClickTokenValue: HandleClickTokenValue;
 }
 
 const SwapModal = ({
   handleClickModal,
   tokenValue,
-  setTokenValue,
+  setToken,
+  handleClickTokenValue,
 }: SwapModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -32,11 +34,9 @@ const SwapModal = ({
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("touchstart", handleClickOutside);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("touchstart", handleClickOutside);
     };
   }, [handleClickModal]);
 
@@ -82,10 +82,9 @@ const SwapModal = ({
                       ? "border-uni-blue-2 bg-uni-blue-3 text-uni-blue-2"
                       : "border-uni-gray-11 bg-white"
                   } flex gap-2 rounded-2xl border py-[6px] pl-[6px] pr-3`}
-                  onClick={() => {
-                    setTokenValue(item);
-                    handleClickModal();
-                  }}
+                  onClick={() =>
+                    handleClickTokenValue(item, handleClickModal, setToken)
+                  }
                 >
                   <img
                     src={item.src}
@@ -108,10 +107,9 @@ const SwapModal = ({
                   ? "pointer-events-none flex items-center justify-between opacity-40"
                   : "cursor-pointer hover:bg-uni-gray-10"
               }  px-5 py-2`}
-              onClick={() => {
-                setTokenValue(item);
-                handleClickModal();
-              }}
+              onClick={() =>
+                handleClickTokenValue(item, handleClickModal, setToken)
+              }
             >
               <div className="flex items-center gap-4">
                 <img
