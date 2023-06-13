@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { ReactComponent as Close } from "../../assets/close.svg";
 import { ReactComponent as RedCheck } from "../../assets/red-check.svg";
 import { TOKEN_ARR } from "../../constants/constants";
