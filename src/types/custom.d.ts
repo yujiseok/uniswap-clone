@@ -15,3 +15,11 @@ interface Token {
   ticker: TokenLabel;
   price: number;
 }
+
+interface HandleClickTokenValue {
+  (
+    item: Token,
+    modalHandler: VoidFunction,
+    setToken: React.Dispatch<Token>
+  ): void;
+}
