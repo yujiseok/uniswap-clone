@@ -1,3 +1,4 @@
+import Drawer from "./components/drawer/Drawer";
 import Navbar from "./components/Navbar";
 import Swap from "./components/swap/Swap";
 
@@ -9,6 +10,7 @@ const App = () => {
         <Swap />
       </main>
       <div className="bg-radial-gradient" />
+      <Drawer />
     </>
   );
 };
