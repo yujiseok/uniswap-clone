@@ -79,9 +79,9 @@ const SwapModal = ({
                 <button
                   className={`${
                     item.ticker === tokenValue?.ticker
-                      ? "border-uni-blue-2 bg-uni-blue-3 text-uni-blue-2"
+                      ? "cursor-auto border-uni-blue-2 bg-uni-blue-3 text-uni-blue-2"
                       : "border-uni-gray-11 bg-white"
-                  } flex gap-2 rounded-2xl border py-[6px] pl-[6px] pr-3`}
+                  } flex gap-2 rounded-2xl border py-[6px] pl-[6px] pr-3 hover:bg-uni-gray-14`}
                   onClick={() =>
                     handleClickTokenValue(item, handleClickModal, setToken)
                   }

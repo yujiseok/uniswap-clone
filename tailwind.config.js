@@ -20,6 +20,7 @@ export default {
         "uni-gray-11": "rgb(210, 217, 238)",
         "uni-gray-12": "rgb(119, 128, 160)",
         "uni-gray-13": "rgba(184, 192, 220, 0.24)",
+        "uni-gray-14": "rgba(152, 161, 192, 0.08)",
         "uni-pink-1": "rgba(251, 17, 142, 0.12)",
         "uni-pink-2": "rgb(251, 17, 142)",
         "uni-pink-3": "#fb118e",
