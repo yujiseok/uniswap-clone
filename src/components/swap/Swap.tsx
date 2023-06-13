@@ -4,6 +4,7 @@ import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Config } from "../../assets/config.svg";
 import { ReactComponent as DownArrow } from "../../assets/down-arrow.svg";
 import { ReactComponent as Fuel } from "../../assets/fuel.svg";
+import { MAX_ARR, TOKEN_ARR } from "../../constants/constants";
 import useInput from "../../lib/hooks/useInput";
 import useToggle from "../../lib/hooks/useToggle";
 import calculatePrice from "../../lib/utils/calculatePrice";
@@ -11,11 +12,11 @@ import formatNumber from "../../lib/utils/formatNumber";
 import formatter from "../../lib/utils/formatter";
 import BottomBanner from "../BottomBanner";
 import AnimatedDropdown from "../dropdown/AnimatedDropdown";
-import ConfigDropdown, { maxArr } from "../dropdown/ConfigDropdown";
+import ConfigDropdown from "../dropdown/ConfigDropdown";
 import Etherscan from "../Etherscan";
 import Hr from "../Hr";
 import ModalPortal from "../modal/ModalPortal";
-import SwapModal, { tokenArr } from "../modal/SwapModal";
+import SwapModal from "../modal/SwapModal";
 import SwapBlock from "./SwapBlock";
 import SwapInput from "./SwapInput";
 import SwapList from "./SwapList";
@@ -29,13 +30,13 @@ const Swap = () => {
   const [isBottomModalOpen, handleClickBottomModal] = useToggle();
   const [isOpen, handleClickOpen] = useToggle();
   const [swapTopValue, handleSwapTopValue] = useInput();
-  const [maxLabel, setMaxLabel] = useState<MaxLabel>(maxArr[0].label);
+  const [maxLabel, setMaxLabel] = useState<MaxLabel>(MAX_ARR[0].label);
   const [maxValue, setMaxValue] = useState(0.1);
-  const [topToken, setTopToken] = useState<Token>(tokenArr[0]);
+  const [topToken, setTopToken] = useState<Token>(TOKEN_ARR[0]);
   const [bottomToken, setBottomToken] = useState<Token>();
 
   const handleClickMaxLabel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // if (maxValue === 0) setMaxLabel(maxArr[0].label);
+    // if (maxValue === 0) setMaxLabel(MAX_ARR[0].label);
     setMaxLabel(e.currentTarget.textContent as MaxLabel);
   };
 

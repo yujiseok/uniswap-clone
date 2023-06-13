@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Question } from "../../assets/question.svg";
+import { MAX_ARR } from "../../constants/constants";
 import useToggle from "../../lib/hooks/useToggle";
 import Hr from "../Hr";
 import AnimatedDropdown from "./AnimatedDropdown";
@@ -81,7 +82,7 @@ const ConfigDropdown = ({
         <AnimatedDropdown isOpen={isMaxOpen}>
           <div className="flex items-center justify-between gap-4 pt-3">
             <div className="flex rounded-2xl border border-uni-gray-11 p-1">
-              {maxArr.map((item) => (
+              {MAX_ARR.map((item) => (
                 <button
                   key={item.label}
                   className={`${
@@ -126,15 +127,15 @@ const ConfigDropdown = ({
       <AnimatedDropdown isOpen={isTimeOpen}>
         <div
           className={`${
-            timeValue > 4320
+            timeValue > TIME_VALUE
               ? "border-uni-red-1 text-uni-red-2"
               : "border-uni-gray-11"
-          } flex w-full justify-end gap-3 rounded-xl border px-4 py-2`}
+          } flex w-full justify-end gap-3 rounded-xl border px-4 py-2 text-uni-black-1`}
         >
           <input
             type="text"
             placeholder="30"
-            className="flex-1 bg-transparent text-right outline-none"
+            className="flex-1 bg-transparent text-right outline-none  "
             onChange={(e) => setTimeValue(Number(e.target.value))}
           />
           <div className="text-uni-black-1">분</div>
@@ -145,7 +146,4 @@ const ConfigDropdown = ({
 };
 export default ConfigDropdown;
 
-export const maxArr: { label: MaxLabel }[] = [
-  { label: "자동" },
-  { label: "사용자 정의" },
-];
+const TIME_VALUE = 4320;

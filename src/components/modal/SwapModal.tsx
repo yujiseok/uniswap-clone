@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { ReactComponent as Close } from "../../assets/close.svg";
-import eth from "../../assets/eth.png";
 import { ReactComponent as RedCheck } from "../../assets/red-check.svg";
-import usdc from "../../assets/usdc.png";
-import wbtc from "../../assets/wbtc.png";
+import { TOKEN_ARR } from "../../constants/constants";
 import Hr from "../Hr";
 
 interface SwapModalProps {
@@ -74,7 +72,7 @@ const SwapModal = ({
           </div>
 
           <ul className="flex gap-2">
-            {tokenArr.map((item) => (
+            {TOKEN_ARR.map((item) => (
               <li key={item.ticker}>
                 <button
                   className={`${
@@ -99,7 +97,7 @@ const SwapModal = ({
         </div>
         <Hr />
         <ul className="flex flex-col gap-2 pb-1">
-          {tokenArr.map((item) => (
+          {TOKEN_ARR.map((item) => (
             <li
               key={item.ticker}
               className={`${
@@ -139,24 +137,3 @@ const modalVariants = {
   visible: { opacity: 1, transition: { ease: "easeOut", duration: 0.25 } },
   exit: { opacity: 0, transition: { ease: "easeIn", duration: 0.35 } },
 };
-
-export const tokenArr: Token[] = [
-  {
-    src: eth,
-    token: "Ether",
-    ticker: "ETH",
-    price: 1000,
-  },
-  {
-    src: usdc,
-    token: "USDCoin",
-    ticker: "USDC",
-    price: 1,
-  },
-  {
-    src: wbtc,
-    token: "Wrapped BTC",
-    ticker: "WBTC",
-    price: 10000,
-  },
-];
