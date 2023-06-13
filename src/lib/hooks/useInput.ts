@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 type UseInput = () => [
-  value: string,
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  string,
+  (e: React.ChangeEvent<HTMLInputElement>) => void
 ];
 
 const useInput: UseInput = (initialState = "") => {
