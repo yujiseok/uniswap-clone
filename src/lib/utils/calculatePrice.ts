@@ -9,14 +9,12 @@ const calculatePrice: CalculatePriceFn = (topToken, bottomToken, swapValue) => {
 
   if (bottomToken) {
     if (topToken.price > bottomToken.price) {
-      bottomPrice = (Number(swapValue) * topToken.price).toString();
+      bottomPrice = (Number(swapValue) * topToken.price).toLocaleString();
     } else if (topToken.price < bottomToken.price) {
       bottomPrice = (
         (Number(swapValue) * topToken.price) /
         bottomToken.price
-      ).toString();
-    } else {
-      bottomPrice = swapValue;
+      ).toLocaleString();
     }
   }
 
