@@ -16,7 +16,6 @@ import AnimatedDropdown from "../dropdown/AnimatedDropdown";
 import ConfigDropdown from "../dropdown/ConfigDropdown";
 import Etherscan from "../Etherscan";
 import Hr from "../Hr";
-import ModalPortal from "../modal/ModalPortal";
 import SwapModal from "../modal/SwapModal";
 import SwapBlock from "./SwapBlock";
 import SwapInput from "./SwapInput";
