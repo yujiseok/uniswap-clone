@@ -320,24 +320,20 @@ const Swap = () => {
 
       <AnimatePresence>
         {isTopModalOpen && (
-          <ModalPortal>
-            <SwapModal
-              handleClickModal={handleClickTopModal}
-              tokenValue={topToken}
-              setToken={setTopToken}
-              handleClickTokenValue={handleClickTokenValue}
-            />
-          </ModalPortal>
+          <SwapModal
+            handleClickModal={handleClickTopModal}
+            tokenValue={topToken}
+            setToken={setTopToken}
+            handleClickTokenValue={handleClickTokenValue}
+          />
         )}
         {isBottomModalOpen && (
-          <ModalPortal>
-            <SwapModal
-              handleClickModal={handleClickBottomModal}
-              tokenValue={bottomToken}
-              setToken={setBottomToken}
-              handleClickTokenValue={handleClickTokenValue}
-            />
-          </ModalPortal>
+          <SwapModal
+            handleClickModal={handleClickBottomModal}
+            tokenValue={bottomToken}
+            setToken={setBottomToken}
+            handleClickTokenValue={handleClickTokenValue}
+          />
         )}
       </AnimatePresence>
     </>
