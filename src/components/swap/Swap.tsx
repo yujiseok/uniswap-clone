@@ -8,12 +8,15 @@ import useToggle from "../../lib/hooks/useToggle";
 import calculatePrice from "../../lib/utils/calculatePrice";
 import formatNumber from "../../lib/utils/formatNumber";
 import BottomBanner from "../BottomBanner";
+import AnimatedDropdown from "../dropdown/AnimatedDropdown";
 import ConfigDropdown, { maxArr } from "../dropdown/ConfigDropdown";
 import Etherscan from "../Etherscan";
+import Hr from "../Hr";
 import ModalPortal from "../modal/ModalPortal";
 import SwapModal, { tokenArr } from "../modal/SwapModal";
 import SwapBlock from "./SwapBlock";
 import SwapInput from "./SwapInput";
+import SwapList from "./SwapList";
 import SwapPrice from "./SwapPrice";
 
 const Swap = () => {
@@ -22,12 +25,15 @@ const Swap = () => {
   const [isDropdownOpen, handleClickDropdown] = useToggle();
   const [isModalOpen, handleClickModal] = useToggle();
   const [isModalOpen2, handleClickModal2] = useToggle();
+
+  const [isOpen, handleClickOpen] = useToggle();
+
   const [maxLabel, setMaxLabel] = useState<MaxLabel>(maxArr[0].label);
   const [maxValue, setMaxValue] = useState(0.1);
   const [tokenValue, setTokenValue] = useState<Token>(tokenArr[0]);
   const [tokenValue2, setTokenValue2] = useState<Token>();
   const [swapTopValue, handleSwapTopValue] = useInput();
-  const test = calculatePrice(tokenValue, tokenValue2, swapTopValue);
+  const bottomPrice = calculatePrice(tokenValue, tokenValue2, swapTopValue);
 
   const [swapBottomValue, handleSwapBottomValue] = useInput();
 
@@ -37,9 +43,8 @@ const Swap = () => {
   };
 
   const topTokenPrice = formatNumber(swapTopValue, tokenValue.price); // 유닛 추가한 것
-
   const topPrice = !isNaN(Number(swapTopValue)) ? topTokenPrice : "";
-  console.log(test);
+
   return (
     <>
       <section className="mx-auto max-w-[480px] px-2">
@@ -71,7 +76,6 @@ const Swap = () => {
                 <Config className="text-uni-gray-12" />
               </button>
             </div>
-            {/* 드롭다운 */}
             {isDropdownOpen ? (
               <ConfigDropdown
                 maxLabel={maxLabel}
@@ -123,7 +127,7 @@ const Swap = () => {
               <SwapBlock>
                 <div className="flex items-center">
                   <SwapInput
-                    value={test}
+                    value={bottomPrice}
                     handleSwapValue={handleSwapBottomValue}
                   />
                   {tokenValue2?.ticker ? (
@@ -161,7 +165,7 @@ const Swap = () => {
               <SwapBlock>
                 <div className="flex items-center">
                   <SwapInput
-                    value={test}
+                    value={bottomPrice}
                     handleSwapValue={handleSwapBottomValue}
                   />
                   {tokenValue2?.ticker ? (
@@ -229,6 +233,48 @@ const Swap = () => {
             </>
           )}
 
+          {bottomPrice ? (
+            <div className="border-uni mt-1 rounded-2xl border p-4 text-sm font-normal">
+              <button
+                className="flex w-full justify-between"
+                onClick={handleClickOpen}
+              >
+                <div>
+                  1 {tokenValue2?.ticker} = {tokenValue.price.toLocaleString()}{" "}
+                  {tokenValue.ticker}{" "}
+                  <span className="text-uni-gray-2">
+                    (
+                    {tokenValue.price.toLocaleString("en-US", {
+                      currency: "USD",
+                      style: "currency",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 3,
+                    })}
+                    )
+                  </span>
+                </div>
+                <div className="flex items-center gap-1 text-uni-black-1">
+                  <Chevron
+                    className={`${
+                      isOpen ? "rotate-180" : ""
+                    } transition-transform duration-[250ms]`}
+                  />
+                </div>
+              </button>
+              <AnimatedDropdown isOpen={isOpen}>
+                <ul className="flex flex-col gap-3 pt-3 text-uni-gray-2">
+                  <Hr />
+                  <SwapList label="네트워크 요금" desc="~$3.19" />
+                  <SwapList label="가격 영향" desc="~$3.19" />
+                  <SwapList label="최소 출력" desc="~$3.19" />
+                  <SwapList label="예상 출력" desc="~$3.19" />
+
+                  <Hr />
+                  <SwapList label="주문 라우팅" desc="~$3.19" />
+                </ul>
+              </AnimatedDropdown>
+            </div>
+          ) : null}
           <button className="mt-1 w-full rounded-[20px] bg-uni-pink-1 p-4 text-xl font-semibold text-uni-pink-2 transition-colors duration-[250ms] hover:bg-uni-pink-4">
             지갑 연결
           </button>
