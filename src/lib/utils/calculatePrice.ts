@@ -7,6 +7,8 @@ type CalculatePriceFn = (
 const calculatePrice: CalculatePriceFn = (topToken, bottomToken, swapValue) => {
   let bottomPrice = "";
 
+  if (!swapValue) return bottomPrice;
+
   if (bottomToken) {
     if (topToken.price > bottomToken.price) {
       bottomPrice = (Number(swapValue) * topToken.price).toLocaleString();
