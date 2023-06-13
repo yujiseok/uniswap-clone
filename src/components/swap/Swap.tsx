@@ -253,7 +253,7 @@ const Swap = () => {
               >
                 <div>
                   1 {isSwitch ? topToken.ticker : bottomToken?.ticker} ={" "}
-                  {switchRate}{" "}
+                  {switchRate.replace("$", "")}{" "}
                   {isSwitch ? bottomToken?.ticker : topToken?.ticker}
                   <span className="text-uni-gray-2">
                     {" "}
