@@ -3,10 +3,12 @@ import { useState } from "react";
 import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Config } from "../../assets/config.svg";
 import { ReactComponent as DownArrow } from "../../assets/down-arrow.svg";
+import { ReactComponent as Fuel } from "../../assets/fuel.svg";
 import useInput from "../../lib/hooks/useInput";
 import useToggle from "../../lib/hooks/useToggle";
 import calculatePrice from "../../lib/utils/calculatePrice";
 import formatNumber from "../../lib/utils/formatNumber";
+import formatter from "../../lib/utils/formatter";
 import BottomBanner from "../BottomBanner";
 import AnimatedDropdown from "../dropdown/AnimatedDropdown";
 import ConfigDropdown, { maxArr } from "../dropdown/ConfigDropdown";
@@ -58,6 +60,10 @@ const Swap = () => {
   const bottomTokenPrice = calculatePrice(topToken, bottomToken, swapTopValue);
   const topTokenPrice = formatNumber(swapTopValue, topToken.price);
   const usd = !isNaN(Number(swapTopValue)) ? topTokenPrice : "";
+
+  const switchRate = isSwitch
+    ? formatter.format(topToken.price / (bottomToken?.price as number))
+    : formatter.format((bottomToken?.price as number) / topToken.price);
 
   return (
     <>
@@ -246,20 +252,25 @@ const Swap = () => {
                 onClick={handleClickOpen}
               >
                 <div>
-                  1 {bottomToken?.ticker} = {topToken.price.toLocaleString()}{" "}
-                  {topToken.ticker}{" "}
+                  1 {isSwitch ? topToken.ticker : bottomToken?.ticker} ={" "}
+                  {switchRate}{" "}
+                  {isSwitch ? bottomToken?.ticker : topToken?.ticker}
                   <span className="text-uni-gray-2">
+                    {" "}
                     (
-                    {topToken.price.toLocaleString("en-US", {
-                      currency: "USD",
-                      style: "currency",
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 3,
-                    })}
+                    {formatter.format(
+                      isSwitch ? topToken.price : (bottomToken?.price as number)
+                    )}
                     )
                   </span>
                 </div>
                 <div className="flex items-center gap-1 text-uni-black-1">
+                  {isOpen ? null : (
+                    <>
+                      <Fuel />
+                      <div className="text-uni-gray-2">$1.1</div>
+                    </>
+                  )}
                   <Chevron
                     className={`${
                       isOpen ? "rotate-180" : ""
