@@ -1,12 +1,10 @@
 import { AnimatePresence, motion, Variants } from "framer-motion";
 
-const AnimatedDropdown = ({
-  isOpen,
-  children,
-}: {
+interface AnimatedDropdownProps {
   isOpen: boolean;
   children: React.ReactNode;
-}) => {
+}
+const AnimatedDropdown = ({ isOpen, children }: AnimatedDropdownProps) => {
   return (
     <AnimatePresence>
       {isOpen ? (

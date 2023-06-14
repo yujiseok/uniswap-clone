@@ -1,10 +1,9 @@
-const SwapInput = ({
-  value,
-  handleSwapValue,
-}: {
+interface SwapInputProps {
   value: string;
   handleSwapValue?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) => {
+}
+
+const SwapInput = ({ value, handleSwapValue }: SwapInputProps) => {
   return (
     <input
       type="text"

@@ -1,4 +1,9 @@
-const SwapList = ({ label, desc }: { label: string; desc: string }) => {
+interface SwapListProps {
+  label: string;
+  desc: string;
+}
+
+const SwapList = ({ label, desc }: SwapListProps) => {
   return (
     <li className="flex justify-between">
       <div>{label}</div>

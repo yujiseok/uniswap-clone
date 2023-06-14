@@ -8,7 +8,7 @@ import Hr from "../Hr";
 import AnimatedDropdown from "./AnimatedDropdown";
 import RouterDropdown from "./RouterDropdown";
 
-interface Props {
+interface ConfigDropdownProps {
   maxLabel: MaxLabel;
   maxValue: string;
   handleClickMaxLabel: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -24,7 +24,7 @@ const ConfigDropdown = forwardRef(
       handleClickMaxLabel,
       setMaxValue,
       setMaxLabel,
-    }: Props,
+    }: ConfigDropdownProps,
     ref: React.ForwardedRef<HTMLDivElement>
   ) => {
     const [toggle, handClickToggle] = useToggle();

@@ -1,9 +1,9 @@
-interface IRouterDropdown {
+interface RouterDropdownProps {
   handleClickActive: (i: number) => void;
   active: number;
 }
 
-const RouterDropdown = ({ handleClickActive, active }: IRouterDropdown) => {
+const RouterDropdown = ({ handleClickActive, active }: RouterDropdownProps) => {
   return (
     <div className="flex flex-col gap-[1.5px] overflow-hidden rounded-xl">
       {routerArr.map((item, i) => (
