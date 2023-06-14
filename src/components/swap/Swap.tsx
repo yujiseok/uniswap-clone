@@ -88,8 +88,6 @@ const Swap = () => {
     }
   }, [maxLabel, maxValue]);
 
-  console.log({ maxValue, maxLabel });
-
   return (
     <>
       <section className="mx-auto max-w-[480px] px-2">
@@ -168,7 +166,7 @@ const Swap = () => {
                     <Chevron />
                   </button>
                 </div>
-                <SwapPrice>{usd && usd !== "$0.00" && `${usd}`}</SwapPrice>
+                <SwapPrice>{usd && usd !== "$0.00" && `${usd}`} </SwapPrice>
               </SwapBlock>
 
               <div className="relative -my-[18px] flex justify-center">
@@ -209,7 +207,12 @@ const Swap = () => {
                   )}
                 </div>
                 <SwapPrice>
-                  {bottomTokenPrice && usd !== "$0.00" && `${usd}`}
+                  {bottomTokenPrice && usd !== "$0.00" && `${usd}`}{" "}
+                  {bottomTokenPrice ? (
+                    <span className="font-light text-uni-gray-4">
+                      (-0.050%)
+                    </span>
+                  ) : null}
                 </SwapPrice>
               </SwapBlock>
             </>
@@ -244,7 +247,12 @@ const Swap = () => {
                   )}
                 </div>
                 <SwapPrice>
-                  {bottomTokenPrice && usd !== "$0.00" && `${usd}`}
+                  {bottomTokenPrice && usd !== "$0.00" && `${usd}`}{" "}
+                  {bottomTokenPrice ? (
+                    <span className="font-light text-uni-gray-4">
+                      (-0.050%)
+                    </span>
+                  ) : null}
                 </SwapPrice>
               </SwapBlock>
 
@@ -306,7 +314,7 @@ const Swap = () => {
                   {isOpen ? null : (
                     <>
                       <Fuel />
-                      <div className="text-uni-gray-2">$1.1</div>
+                      <div className="text-uni-gray-2">{networkFee}</div>
                     </>
                   )}
                   <Chevron
@@ -319,13 +327,23 @@ const Swap = () => {
               <AnimatedDropdown isOpen={isOpen}>
                 <ul className="flex flex-col gap-3 pt-3 text-uni-gray-2">
                   <Hr />
-                  <SwapList label="네트워크 요금" desc="~$3.19" />
-                  <SwapList label="가격 영향" desc="~$3.19" />
-                  <SwapList label="최소 출력" desc="~$3.19" />
-                  <SwapList label="예상 출력" desc="~$3.19" />
+                  <SwapList label="네트워크 요금" desc={`~${networkFee}`} />
+                  <SwapList label="가격 영향" desc="-0.05%" />
+                  <SwapList
+                    label={!isSwitch ? "최소 출력" : "최대 입력"}
+                    desc={`${bottomTokenPrice} ${bottomToken?.ticker}`}
+                  />
+                  <SwapList
+                    label="예상 출력"
+                    desc={
+                      !isSwitch
+                        ? `${bottomTokenPrice} ${bottomToken?.ticker}`
+                        : `${swapTopValue} ${topToken.ticker}`
+                    }
+                  />
 
                   <Hr />
-                  <SwapList label="주문 라우팅" desc="~$3.19" />
+                  <SwapList label="주문 라우팅" desc="Uniswap API" />
                 </ul>
               </AnimatedDropdown>
             </div>
@@ -368,3 +386,5 @@ const Swap = () => {
   );
 };
 export default Swap;
+
+const networkFee = "$3.37";
