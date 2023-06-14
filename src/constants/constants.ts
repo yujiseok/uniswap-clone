@@ -24,3 +24,5 @@ export const TOKEN_ARR: Token[] = [
     price: 10000,
   },
 ];
+
+export const REG_EX = /^[0-9]*\.?[0-9]*$/;

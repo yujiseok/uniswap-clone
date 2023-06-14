@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { REG_EX } from "../../constants/constants";
 
 type UseInput = () => [
   string,
@@ -18,5 +19,3 @@ const useInput: UseInput = (initialState = "") => {
   return [value, handleChange];
 };
 export default useInput;
-
-const REG_EX = /^[0-9]*\.?[0-9]*$/;
