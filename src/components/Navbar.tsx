@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-
 import { ReactComponent as Chevron } from "../assets/chevron.svg";
 import { ReactComponent as Ellipsis } from "../assets/ellipsis.svg";
 import Ethereum from "../assets/eth.png";
@@ -9,7 +8,6 @@ import { useDrawerDispatch } from "../context/DrawerContext";
 import useClickOutside from "../lib/hooks/useClickOutside";
 import ResourceDropdown from "./dropdown/ResourceDropdown";
 import TickerDropdown from "./dropdown/TickerDropdown";
-import Hr from "./Hr";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
