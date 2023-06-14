@@ -18,6 +18,7 @@ import { ReactComponent as SearchIcon } from "../assets/searchIcon.svg";
 import { ReactComponent as Twitter } from "../assets/twitter.svg";
 import { useDrawerDispatch } from "../context/DrawerContext";
 import useClickOutside from "../lib/hooks/useClickOutside";
+import Hr from "./Hr";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
@@ -84,30 +85,38 @@ const Navbar = () => {
           {toggle ? (
             <div
               ref={dropdownRef}
-              className="absolute left-36 top-14 flex flex-col gap-4 rounded-xl border border-uni-dropdown-border bg-white p-4 shadow-uni-dropdown"
+              className="absolute left-36 top-14 flex flex-col gap-4 rounded-xl border border-uni-dropdown-border bg-white px-2 py-2 shadow-uni-dropdown"
             >
-              <ul className="border-b text-black">
-                {dropDownArrTop.map((item) => (
-                  <li key={item.label}>
-                    <a className="flex gap-3 pb-5">
+              <ul className="text-black">
+                {dropdownArrTop.map((item) => (
+                  <li
+                    key={item.label}
+                    className="rounded-xl hover:bg-uni-gray-14"
+                  >
+                    <a className="flex items-center gap-3 p-2">
                       <span>{item.icon}</span> {item.label}
                     </a>
                   </li>
                 ))}
               </ul>
-
+              <Hr />
               <ul>
-                {dropDownArrBottom.map((item) => (
-                  <li key={item.label}>
-                    <a className="flex gap-3 pb-3 text-sm">{item.label}</a>
+                {dropdownArrBottom.map((item) => (
+                  <li
+                    key={item.label}
+                    className="rounded-xl hover:bg-uni-gray-14"
+                  >
+                    <a className="flex gap-3 p-2 text-sm">{item.label}</a>
                   </li>
                 ))}
               </ul>
 
-              <div className="flex gap-2">
-                <Discord />
-                <Twitter />
-                <Github />
+              <div className="flex gap-3 px-3">
+                {dropdownIconArr.map((item, i) => (
+                  <div key={i} className="rounded-xl hover:bg-uni-gray-14">
+                    {item.icon}
+                  </div>
+                ))}
               </div>
             </div>
           ) : null}
@@ -194,7 +203,7 @@ const navArr = [
   },
 ];
 
-const dropDownArrTop = [
+const dropdownArrTop = [
   {
     icon: <Apple />,
     label: "유니스왑 지갑 다운로드",
@@ -209,7 +218,7 @@ const dropDownArrTop = [
   },
 ];
 
-const dropDownArrBottom = [
+const dropdownArrBottom = [
   {
     label: "지원 센터 ↗",
   },
@@ -222,6 +231,12 @@ const dropDownArrBottom = [
   {
     label: "법률 및 개인정보 보호 ↗",
   },
+];
+
+const dropdownIconArr = [
+  { icon: <Discord /> },
+  { icon: <Twitter /> },
+  { icon: <Github /> },
 ];
 
 const tickerArr = [
