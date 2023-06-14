@@ -36,6 +36,9 @@ export default {
         "uni-green-1": "rgb(64, 182, 107)",
         "uni-red-1": "rgba(250,43,27,0.12)",
         "uni-red-2": "rgb(250,43,27)",
+        "uni-red-3": "rgb(250,43,57)",
+        "uni-yellow-1": "rgb(177, 121, 0)",
+        "uni-yellow-2": "rgba(177, 121, 0, 0.24)",
       },
       boxShadow: {
         "uni-dropdown": "0 4px 12px 0 #00000026",

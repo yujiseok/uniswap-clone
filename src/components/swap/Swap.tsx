@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Config } from "../../assets/config.svg";
 import { ReactComponent as DownArrow } from "../../assets/down-arrow.svg";
@@ -31,8 +31,9 @@ const Swap = () => {
   const [isOpen, handleClickOpen] = useToggle();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [swapTopValue, handleSwapTopValue] = useInput();
+  const [maxValue, setMaxValue] = useState("0.1");
+
   const [maxLabel, setMaxLabel] = useState<MaxLabel>(MAX_ARR[0].label);
-  const [maxValue, setMaxValue] = useState(0.1);
   const [topToken, setTopToken] = useState<Token>(TOKEN_ARR[0]);
   const [bottomToken, setBottomToken] = useState<Token>();
   const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
@@ -77,6 +78,18 @@ const Swap = () => {
     ? formatter.format(topToken.price / (bottomToken?.price as number))
     : formatter.format((bottomToken?.price as number) / topToken.price);
 
+  useEffect(() => {
+    if (maxLabel === "자동") {
+      setMaxValue("");
+    }
+
+    if (maxLabel === "사용자 정의" && !maxValue) {
+      setMaxValue("0.1");
+    }
+  }, [maxLabel, maxValue]);
+
+  console.log({ maxValue, maxLabel });
+
   return (
     <>
       <section className="mx-auto max-w-[480px] px-2">
@@ -96,13 +109,18 @@ const Swap = () => {
 
             <div
               className={`${
-                maxLabel !== "자동"
-                  ? "flex items-center gap-2 rounded-2xl bg-uni-gray-5"
+                maxLabel !== "자동" &&
+                Number(maxValue) <= 1 &&
+                Number(maxValue) > 0.04
+                  ? "bg-uni-gray-5"
+                  : maxLabel !== "자동" &&
+                    (Number(maxValue) < 0.05 || Number(maxValue) > 1)
+                  ? "bg-uni-yellow-2 text-uni-yellow-1"
                   : ""
-              } hover:opacity-70`}
+              } flex items-center gap-2 rounded-2xl text-uni-gray-12 hover:opacity-70`}
             >
               {maxLabel !== "자동" ? (
-                <div className="pl-3 text-xs text-uni-gray-12">{`${maxValue.toFixed(
+                <div className="pl-3 text-xs">{`${Number(maxValue).toFixed(
                   2
                 )}% 미끄러짐`}</div>
               ) : null}
@@ -120,6 +138,7 @@ const Swap = () => {
                 maxValue={maxValue}
                 handleClickMaxLabel={handleClickMaxLabel}
                 setMaxValue={setMaxValue}
+                setMaxLabel={setMaxLabel}
                 ref={dropdownRef}
               />
             ) : null}

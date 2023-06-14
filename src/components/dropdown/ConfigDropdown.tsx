@@ -1,7 +1,8 @@
 import { forwardRef, useState } from "react";
+import { ReactComponent as Alert } from "../../assets/alert.svg";
 import { ReactComponent as Chevron } from "../../assets/chevron.svg";
 import { ReactComponent as Question } from "../../assets/question.svg";
-import { MAX_ARR } from "../../constants/constants";
+import { MAX_ARR, REG_EX } from "../../constants/constants";
 import useToggle from "../../lib/hooks/useToggle";
 import Hr from "../Hr";
 import AnimatedDropdown from "./AnimatedDropdown";
@@ -9,14 +10,21 @@ import RouterDropdown from "./RouterDropdown";
 
 interface Props {
   maxLabel: MaxLabel;
-  maxValue: number;
+  maxValue: string;
   handleClickMaxLabel: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  setMaxValue: React.Dispatch<number>;
+  setMaxValue: React.Dispatch<React.SetStateAction<string>>;
+  setMaxLabel: React.Dispatch<React.SetStateAction<MaxLabel>>;
 }
 
 const ConfigDropdown = forwardRef(
   (
-    { maxLabel, maxValue, handleClickMaxLabel, setMaxValue }: Props,
+    {
+      maxLabel,
+      maxValue,
+      handleClickMaxLabel,
+      setMaxValue,
+      setMaxLabel,
+    }: Props,
     ref: React.ForwardedRef<HTMLDivElement>
   ) => {
     const [toggle, handClickToggle] = useToggle();
@@ -26,6 +34,16 @@ const ConfigDropdown = forwardRef(
     const [timeValue, setTimeValue] = useState(0);
 
     const handleClickActive = (i: number) => setActive(i);
+    const handleChangeMaxValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      if (REG_EX.test(value)) {
+        setMaxValue(value);
+
+        const maxLabel = value ? "사용자 정의" : "자동";
+
+        setMaxLabel(maxLabel);
+      }
+    };
 
     return (
       <div
@@ -76,7 +94,9 @@ const ConfigDropdown = forwardRef(
               className="flex items-center gap-1 text-uni-black-1"
               onClick={handleClickMaxOpen}
             >
-              {maxLabel === "자동" ? maxLabel : `${maxValue.toFixed(2)}%`}
+              {maxLabel === "자동"
+                ? maxLabel
+                : `${Number(maxValue).toFixed(2)}%`}
               <Chevron
                 className={`${
                   isMaxOpen ? "rotate-180" : ""
@@ -101,15 +121,40 @@ const ConfigDropdown = forwardRef(
                   </button>
                 ))}
               </div>
-              <div className="flex w-auto flex-1 justify-end gap-3 rounded-2xl border border-uni-gray-11 px-4 py-2">
+              <div
+                className={`${
+                  Number(maxValue) > 50 ? "border-uni-red-1 text-uni-red-2" : ""
+                } flex w-auto flex-1 justify-end gap-3 rounded-2xl border border-uni-gray-11 px-4 py-2 text-uni-black-1`}
+              >
                 <input
                   type="text"
-                  className="w-full text-right text-uni-black-1 outline-none"
+                  className="w-full text-right outline-none"
                   placeholder="0.10"
-                  onChange={(e) => setMaxValue(Number(e.target.value))}
+                  value={maxValue}
+                  onChange={handleChangeMaxValue}
                 />
-                <div>%</div>
+                <div className="text-uni-black-1">%</div>
               </div>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs text-uni-yellow-1">
+              {Number(maxValue) > 1 && (
+                <>
+                  <Alert />
+                  <div className="pt-3">
+                    귀하의 거래는 선불이고 불리한 거래를 초래할 수 있습니다.
+                  </div>
+                </>
+              )}
+
+              {maxValue && Number(maxValue) < 0.05 && (
+                <>
+                  <Alert />
+                  <div className="pt-3">
+                    0.05% 미만의 슬리피지는 거래 실패로 이어질 수 있습니다.
+                  </div>
+                </>
+              )}
             </div>
           </AnimatedDropdown>
         </div>
