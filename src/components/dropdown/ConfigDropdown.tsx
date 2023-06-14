@@ -44,7 +44,6 @@ const ConfigDropdown = forwardRef(
         setMaxLabel(maxLabel);
       }
     };
-
     return (
       <div
         ref={ref}
@@ -137,23 +136,23 @@ const ConfigDropdown = forwardRef(
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-uni-yellow-1">
+            <div className="text-xs text-uni-yellow-1">
               {Number(maxValue) > 1 && (
-                <>
+                <div className="flex items-center gap-2 pt-3">
                   <Alert />
-                  <div className="pt-3">
+                  <div>
                     귀하의 거래는 선불이고 불리한 거래를 초래할 수 있습니다.
                   </div>
-                </>
+                </div>
               )}
 
               {maxValue && Number(maxValue) < 0.05 && (
-                <>
+                <div className="flex items-center gap-2 pt-3">
                   <Alert />
-                  <div className="pt-3">
+                  <div>
                     0.05% 미만의 슬리피지는 거래 실패로 이어질 수 있습니다.
                   </div>
-                </>
+                </div>
               )}
             </div>
           </AnimatedDropdown>
