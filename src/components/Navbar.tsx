@@ -16,6 +16,7 @@ import { ReactComponent as Poll } from "../assets/poll.svg";
 import Polygon from "../assets/polygon.svg";
 import { ReactComponent as SearchIcon } from "../assets/searchIcon.svg";
 import { ReactComponent as Twitter } from "../assets/twitter.svg";
+import { useDrawerDispatch } from "../context/DrawerContext";
 import useClickOutside from "../lib/hooks/useClickOutside";
 
 const Navbar = () => {
@@ -23,6 +24,7 @@ const Navbar = () => {
   const [isTickerOpen, setIsTickerOpen] = useState(false);
   const [tickerUrl, setTickerUrl] = useState(Ethereum);
   const [show, setShow] = useState(false);
+  const dispatch = useDrawerDispatch();
 
   const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -137,7 +139,10 @@ const Navbar = () => {
             <Chevron className={isTickerOpen ? "-rotate-180" : ""} />
           </button>
           <div>
-            <button className="flex h-10 items-center rounded-full bg-uni-pink-1 px-[10px] py-3 text-uni-pink-2 transition-colors ease-in-out hover:text-uni-pink-1">
+            <button
+              className="flex h-10 items-center rounded-full bg-uni-pink-1 px-[10px] py-3 text-uni-pink-2 transition-colors ease-in-out hover:text-uni-pink-1"
+              onClick={() => dispatch?.({ type: "TOGGLE" })}
+            >
               연결하다
             </button>
           </div>

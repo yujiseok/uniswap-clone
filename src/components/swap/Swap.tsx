@@ -5,6 +5,7 @@ import { ReactComponent as Config } from "../../assets/config.svg";
 import { ReactComponent as DownArrow } from "../../assets/down-arrow.svg";
 import { ReactComponent as Fuel } from "../../assets/fuel.svg";
 import { MAX_ARR, TOKEN_ARR } from "../../constants/constants";
+import { useDrawerDispatch, useDrawerState } from "../../context/DrawerContext";
 import useClickOutside from "../../lib/hooks/useClickOutside";
 import useInput from "../../lib/hooks/useInput";
 import useToggle from "../../lib/hooks/useToggle";
@@ -36,6 +37,8 @@ const Swap = () => {
   const [bottomToken, setBottomToken] = useState<Token>();
   const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDrawerDispatch();
+  const isDrawerOpen = useDrawerState();
 
   useClickOutside(
     dropdownTriggerRef,
@@ -45,7 +48,6 @@ const Swap = () => {
   );
 
   const handleClickMaxLabel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // if (maxValue === 0) setMaxLabel(MAX_ARR[0].label);
     setMaxLabel(e.currentTarget.textContent as MaxLabel);
   };
 
@@ -82,7 +84,12 @@ const Swap = () => {
           <div className="relative mb-[10px] flex items-center justify-between pl-3">
             <div className="flex gap-4">
               <div>스왑</div>
-              <button className="flex items-center gap-1 text-uni-gray-12 transition-opacity hover:opacity-90">
+              <button
+                className={`${
+                  isDrawerOpen ? "pointer-events-none opacity-50" : ""
+                } flex items-center gap-1 text-uni-gray-12 transition-opacity hover:opacity-90`}
+                onClick={() => dispatch?.({ type: "TOGGLE" })}
+              >
                 구입하다 <div className="h-2 w-2 rounded-full bg-uni-blue-1" />
               </button>
             </div>
@@ -304,7 +311,10 @@ const Swap = () => {
               </AnimatedDropdown>
             </div>
           ) : null}
-          <button className="mt-1 w-full rounded-[20px] bg-uni-pink-1 p-4 text-xl font-semibold text-uni-pink-2 transition-colors duration-[250ms] hover:bg-uni-pink-4">
+          <button
+            className="mt-1 w-full rounded-[20px] bg-uni-pink-1 p-4 text-xl font-semibold text-uni-pink-2 transition-colors duration-[250ms] hover:bg-uni-pink-4"
+            onClick={() => dispatch?.({ type: "TOGGLE" })}
+          >
             지갑 연결
           </button>
         </div>

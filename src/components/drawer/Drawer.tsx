@@ -1,11 +1,23 @@
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { ReactComponent as Config } from "../../assets/config.svg";
 import { ReactComponent as DoubleChev } from "../../assets/double-chev.svg";
+import { useDrawerDispatch } from "../../context/DrawerContext";
 
 const Drawer = () => {
+  const dispatch = useDrawerDispatch();
+
   return (
-    <motion.aside className="fixed right-2 top-2 z-10 flex h-[calc(100%-16px)]">
-      <div className="cursor-pointer rounded-l-[20px] py-6 pl-[14px] pr-7 transition-all duration-200 hover:-mr-2 hover:bg-uni-gray-14">
+    <motion.aside
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={drawerVariants}
+      className="fixed right-2 top-2 z-10 flex h-[calc(100%-16px)]"
+    >
+      <div
+        className="cursor-pointer rounded-l-[20px] py-6 pl-[14px] pr-7 transition-all duration-200 hover:-mr-2 hover:bg-uni-gray-14"
+        onClick={() => dispatch?.({ type: "TOGGLE" })}
+      >
         <DoubleChev className="text-uni-gray-12" />
       </div>
       <div className="h-full w-80 rounded-xl border border-uni-gray-11 bg-white p-4 shadow-banner">
@@ -81,3 +93,26 @@ const drawerArr = [
     label: "Coinbase Wallet",
   },
 ];
+
+const drawerVariants: Variants = {
+  initial: { x: "100%" },
+  animate: {
+    x: 0,
+    transition: {
+      x: {
+        duration: 0.3,
+      },
+    },
+  },
+  exit: {
+    x: "100%",
+    transition: {
+      x: {
+        duration: 0.25,
+      },
+    },
+  },
+  transition: {
+    type: "spring",
+  },
+};
