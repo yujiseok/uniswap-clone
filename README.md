@@ -5,6 +5,7 @@ DEMO: https://uniswap-clone-snowy.vercel.app/
 ## 기술 스택
 
 - React (18.2.0)
+- TypeScript
 - Tailwind CSS
 - Framer-motion
 - vite
